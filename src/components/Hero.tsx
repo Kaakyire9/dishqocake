@@ -29,7 +29,7 @@ export default function Hero() {
           className="flex-1 flex justify-center lg:justify-end"
         >
           <div className="w-[320px] sm:w-[380px] lg:w-[420px] rounded-2xl overflow-hidden shadow-lg">
-            <Image src="/cake-hero.jpg" alt="Cake hero" width={840} height={560} className="object-cover w-full h-full" />
+            <Image src="/cake-hero.svg" alt="Cake hero" width={840} height={560} className="object-cover w-full h-full" />
           </div>
         </motion.div>
       </div>
