@@ -1,0 +1,109 @@
+"use client";
+
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { toast } from '@/lib/toast';
+import { formatGhs } from '@/lib/orders';
+import { motion } from 'framer-motion';
+
+export default function AdminProductsClient({ items: initialItems, addProduct, updateProduct, deleteProduct }: any) {
+  const [items, setItems] = useState(initialItems || []);
+  const [showModal, setShowModal] = useState(false);
+  const [editing, setEditing] = useState<any | null>(null);
+
+  const openNew = () => {
+    setEditing(null);
+    setShowModal(true);
+  };
+
+  const onSave = async (data: any) => {
+    if (!data.name || !data.price) {
+      toast.error('Name and price required');
+      return;
+    }
+    try {
+      if (editing) {
+        await updateProduct({ id: editing.id, ...data });
+        toast.success('Product updated');
+      } else {
+        const p = { id: uuidv4(), ...data };
+        await addProduct(p);
+        toast.success('Product added');
+      }
+      // optimistic refresh by reloading list from server via location reload
+      setShowModal(false);
+      window.location.reload();
+    } catch (e) {
+      toast.error('Failed to save product');
+    }
+  };
+
+  const onDelete = async (id: string) => {
+    if (!confirm('Delete product?')) return;
+    try {
+      await deleteProduct(id);
+      toast.success('Product deleted');
+      window.location.reload();
+    } catch (e) {
+      toast.error('Failed to delete product');
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold">Products</h2>
+        <button onClick={openNew} className="bg-pink-600 text-white px-4 py-2 rounded">Add Product</button>
+      </div>
+
+      <div className="bg-white rounded-2xl shadow overflow-hidden">
+        {items.map((p: any) => (
+          <div key={p.id} className="flex items-center justify-between p-3 border-b">
+            <div className="flex items-center gap-3">
+              <img src={p.image} alt={p.name} className="w-16 h-12 object-cover rounded" />
+              <div>
+                <div className="font-semibold">{p.name}</div>
+                <div className="text-sm text-gray-500">{p.description}</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="font-medium">{formatGhs(p.price)}</div>
+              <button onClick={() => { setEditing(p); setShowModal(true); }} className="px-3 py-1 bg-yellow-100 rounded">Edit</button>
+              <button onClick={() => onDelete(p.id)} className="px-3 py-1 bg-red-100 rounded">Delete</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {showModal && (
+        <Modal onClose={() => setShowModal(false)} onSave={onSave} initial={editing} />
+      )}
+    </div>
+  );
+}
+
+function Modal({ onClose, onSave, initial }: { onClose: () => void; onSave: (d: any) => void; initial: any | null }) {
+  const [name, setName] = useState(initial?.name || '');
+  const [desc, setDesc] = useState(initial?.description || '');
+  const [price, setPrice] = useState(initial?.price?.toString() || '');
+  const [image, setImage] = useState(initial?.image || '');
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="bg-white rounded-lg p-6 z-10 w-full max-w-md">
+        <h3 className="text-lg font-semibold mb-4">{initial ? 'Edit Product' : 'Add Product'}</h3>
+        <div className="grid gap-2">
+          <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" className="p-2 border rounded" />
+          <input value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Description" className="p-2 border rounded" />
+          <input value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Price" className="p-2 border rounded" />
+          <input value={image} onChange={(e) => setImage(e.target.value)} placeholder="Image URL" className="p-2 border rounded" />
+        </div>
+        <div className="mt-4 flex gap-2 justify-end">
+          <button onClick={onClose} className="px-3 py-2 rounded">Cancel</button>
+          <button onClick={() => onSave({ name, description: desc, price: Number(price), image })} className="px-3 py-2 bg-pink-600 text-white rounded">Save</button>
+        </div>
+      </motion.div>
+    </div>
+  );
+}

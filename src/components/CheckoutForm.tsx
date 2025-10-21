@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
 import { saveOrder } from "@/lib/orders";
 import CopyButton from "./CopyButton";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "@/lib/toast";
 
 type Props = { snapshot: any };
 
@@ -19,6 +20,7 @@ export default function CheckoutForm({ snapshot }: Props) {
   const [note, setNote] = useState("");
   const [checked, setChecked] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // compute total from snapshot as fallback
   const items = snapshot?.items ?? [];
@@ -26,8 +28,10 @@ export default function CheckoutForm({ snapshot }: Props) {
 
   const onPlace = async () => {
     if (!checked) return;
+    setError(null);
     if (!name || !phone || !address) {
-      alert('Please fill name, phone and address');
+      setError('Please fill name, phone and address');
+      toast.error('Please fill name, phone and address');
       return;
     }
     setSubmitting(true);
@@ -45,9 +49,11 @@ export default function CheckoutForm({ snapshot }: Props) {
     const ok = saveOrder(order as any);
     if (ok) {
       clear();
+      toast.success('Order placed — thank you!');
       router.push('/order-success');
     } else {
-      alert('Failed to save order');
+      setError('Failed to save order');
+      toast.error('Failed to save order');
     }
     setSubmitting(false);
   };
@@ -61,6 +67,8 @@ export default function CheckoutForm({ snapshot }: Props) {
         <input value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Delivery address" className="p-3 border rounded" />
         <textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="Optional note" className="p-3 border rounded" />
       </div>
+
+      {error && <div className="mt-3 text-sm text-red-600">{error}</div>}
 
       <div className="mt-6">
         <h4 className="font-semibold mb-2">Momo Payment</h4>

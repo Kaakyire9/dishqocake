@@ -4,14 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useCartStore } from "@/store/cartStore";
 import { formatGhs } from "@/lib/orders";
-let toast: any = null;
-try {
-  // optional sonner
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  toast = require("sonner").toast;
-} catch (e) {
-  toast = null;
-}
+import { toast } from "@/lib/toast";
 
 type Product = {
   id: string;
@@ -26,8 +19,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
   const onAdd = () => {
     add({ id: product.id, name: product.name, description: product.description, price: product.price, image: product.image }, 1);
-    if (toast) toast(`${product.name} added to cart 🍰`);
-    else alert(`${product.name} added to cart`);
+    toast.success(`${product.name} added to cart 🍰`);
   };
 
   return (

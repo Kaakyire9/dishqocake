@@ -1,12 +1,15 @@
 "use client";
 
+import React from 'react';
+import { toast } from "@/lib/toast";
+
 export default function CopyButton({ text }: { text: string }) {
   const onCopy = async () => {
     try {
       await navigator.clipboard.writeText(text);
-      alert('Copied to clipboard');
+      toast.success('Copied to clipboard');
     } catch (e) {
-      alert('Failed to copy');
+      toast.error('Failed to copy');
     }
   };
 
