@@ -5,18 +5,27 @@ import { v4 as uuidv4 } from 'uuid';
 import { toast } from '@/lib/toast';
 import { formatGhs } from '@/lib/orders';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import type { Product } from '@/types';
 
-export default function AdminProductsClient({ items: initialItems, addProduct, updateProduct, deleteProduct }: any) {
-  const [items, setItems] = useState(initialItems || []);
+type Props = {
+  items?: Product[];
+  addProduct: (p: Product) => Promise<unknown> | void;
+  updateProduct: (p: Partial<Product> & { id: string }) => Promise<unknown> | void;
+  deleteProduct: (id: string) => Promise<unknown> | void;
+};
+
+export default function AdminProductsClient({ items: initialItems, addProduct, updateProduct, deleteProduct }: Props) {
+  const [items] = useState<Product[]>(initialItems || []);
   const [showModal, setShowModal] = useState(false);
-  const [editing, setEditing] = useState<any | null>(null);
+  const [editing, setEditing] = useState<Product | null>(null);
 
   const openNew = () => {
     setEditing(null);
     setShowModal(true);
   };
 
-  const onSave = async (data: any) => {
+  const onSave = async (data: ProductInput) => {
     if (!data.name || !data.price) {
       toast.error('Name and price required');
       return;
@@ -26,14 +35,15 @@ export default function AdminProductsClient({ items: initialItems, addProduct, u
         await updateProduct({ id: editing.id, ...data });
         toast.success('Product updated');
       } else {
-        const p = { id: uuidv4(), ...data };
+  const p: Product = { id: uuidv4(), ...data };
         await addProduct(p);
         toast.success('Product added');
       }
       // optimistic refresh by reloading list from server via location reload
-      setShowModal(false);
-      window.location.reload();
-    } catch (e) {
+        setShowModal(false);
+        // ideally use router.refresh(), but reload is a safe fallback
+        window.location.reload();
+    } catch {
       toast.error('Failed to save product');
     }
   };
@@ -44,7 +54,7 @@ export default function AdminProductsClient({ items: initialItems, addProduct, u
       await deleteProduct(id);
       toast.success('Product deleted');
       window.location.reload();
-    } catch (e) {
+    } catch {
       toast.error('Failed to delete product');
     }
   };
@@ -57,10 +67,12 @@ export default function AdminProductsClient({ items: initialItems, addProduct, u
       </div>
 
       <div className="bg-white rounded-2xl shadow overflow-hidden">
-        {items.map((p: any) => (
+        {items.map((p) => (
           <div key={p.id} className="flex items-center justify-between p-3 border-b">
             <div className="flex items-center gap-3">
-              <img src={p.image} alt={p.name} className="w-16 h-12 object-cover rounded" />
+              <div className="w-16 h-12 relative">
+                <Image src={p.image} alt={p.name} fill className="object-cover rounded" />
+              </div>
               <div>
                 <div className="font-semibold">{p.name}</div>
                 <div className="text-sm text-gray-500">{p.description}</div>
@@ -82,7 +94,9 @@ export default function AdminProductsClient({ items: initialItems, addProduct, u
   );
 }
 
-function Modal({ onClose, onSave, initial }: { onClose: () => void; onSave: (d: any) => void; initial: any | null }) {
+type ProductInput = Omit<Product, 'id'>;
+
+function Modal({ onClose, onSave, initial }: { onClose: () => void; onSave: (d: ProductInput) => void; initial: Product | null }) {
   const [name, setName] = useState(initial?.name || '');
   const [desc, setDesc] = useState(initial?.description || '');
   const [price, setPrice] = useState(initial?.price?.toString() || '');

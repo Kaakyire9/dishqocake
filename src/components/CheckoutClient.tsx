@@ -1,42 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useCartStore } from "@/store/cartStore";
 import { formatGhs } from "@/lib/orders";
 import Image from "next/image";
+import type { CartItem } from "@/types";
 
-type Props = { snapshot: any };
+type Props = { snapshot: { items?: CartItem[] } | null };
 
 export default function CheckoutClient({ snapshot }: Props) {
-  const store = useCartStore((s) => s);
-  const storeItems = useCartStore((s) => s.items);
+  // Access only the store methods we need so effect deps are stable
+  const storeItems = useCartStore((s) => s.items) as CartItem[];
   const storeTotal = useCartStore((s) => s.totalPrice());
+  const clearCart = useCartStore((s) => s.clearCart);
+  const addItem = useCartStore((s) => s.addItem);
 
   const [hydrated, setHydrated] = useState(false);
 
   // compute snapshot total
-  const snapshotItems = snapshot?.items ?? [];
-  const snapshotTotal = snapshotItems.reduce((s: number, i: any) => s + (i.price ?? 0) * (i.quantity ?? 0), 0);
+  const snapshotItems: CartItem[] = useMemo(() => snapshot?.items ?? [], [snapshot?.items]);
+  const snapshotTotal = snapshotItems.reduce((s: number, i: CartItem) => s + (i.price ?? 0) * (i.quantity ?? 0), 0);
 
   useEffect(() => {
     // On mount, if there's a snapshot, hydrate the store to match it.
     if (snapshotItems.length > 0) {
-      store.clearCart();
-      snapshotItems.forEach((it: any) => store.addItem(it, it.quantity));
+      clearCart();
+      snapshotItems.forEach((it: CartItem) => addItem(it, it.quantity));
     }
     // mark hydrated so we render from the store going forward
     setHydrated(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [snapshotItems, clearCart, addItem]);
 
-  const displayItems = hydrated ? storeItems : snapshotItems;
+  const displayItems: CartItem[] = hydrated ? storeItems : snapshotItems;
   const displayTotal = hydrated ? storeTotal : snapshotTotal;
 
   return (
     <div>
       <div className="bg-white rounded-lg p-4 shadow mb-6">
         <h3 className="font-semibold mb-4">Order Summary</h3>
-        {displayItems.map((it: any) => (
+        {displayItems.map((it: CartItem) => (
           <div key={it.id} className="flex items-center gap-4 py-3 border-b last:border-b-0">
             <div className="w-20 h-16 relative rounded overflow-hidden">
               <Image src={it.image} alt={it.name} fill className="object-cover" />

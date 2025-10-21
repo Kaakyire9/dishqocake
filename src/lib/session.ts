@@ -18,10 +18,10 @@ export async function getAdminSession() {
     try {
       const v = decodeURIComponent(raw as string);
       return JSON.parse(v as string);
-    } catch (e) {
+    } catch {
       return null;
     }
-  } catch (e) {
+  } catch {
     return null;
   }
 }

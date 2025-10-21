@@ -1,15 +1,5 @@
-import type { CartItem } from "@/store/cartStore";
-
-export type Order = {
-  id: string;
-  name: string;
-  phone: string;
-  address: string;
-  note?: string;
-  items: CartItem[];
-  total: number;
-  createdAt: string;
-};
+import type { Order } from "@/types";
+import { typedFrom } from '@/lib/supabaseClient';
 
 const ORDERS_KEY = "dishqo-orders";
 
@@ -20,8 +10,8 @@ export function saveOrder(order: Order) {
     arr.push(order);
     localStorage.setItem(ORDERS_KEY, JSON.stringify(arr));
     return true;
-  } catch (e) {
-    console.error(e);
+  } catch (_e) {
+    console.error(_e);
     return false;
   }
 }
@@ -35,7 +25,7 @@ export function listOrders(): Order[] {
   try {
     const raw = typeof window !== 'undefined' ? localStorage.getItem(ORDERS_KEY) || '[]' : '[]';
     return JSON.parse(raw);
-  } catch (e) {
+  } catch {
     return [];
   }
 }
@@ -45,10 +35,10 @@ export function updateOrderStatus(id: string, status: 'Pending' | 'Paid' | 'Deli
     const arr = listOrders();
     const idx = arr.findIndex((o) => o.id === id);
     if (idx === -1) return false;
-    (arr[idx] as any).status = status;
+    arr[idx].status = status;
     localStorage.setItem(ORDERS_KEY, JSON.stringify(arr));
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }
@@ -59,20 +49,20 @@ export function deleteOrder(id: string) {
     const updated = arr.filter((o) => o.id !== id);
     localStorage.setItem(ORDERS_KEY, JSON.stringify(updated));
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }
 
 // Optional Supabase-backed operations
-async function getSupabaseClientOrders() {
+async function getSupabaseClientOrders(): Promise<unknown | null> {
   try {
     const url = process?.env?.NEXT_PUBLIC_SUPABASE_URL;
     const key = process?.env?.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     if (!url || !key) return null;
     const { createClient } = await import('@supabase/supabase-js');
     return createClient(url, key);
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -80,7 +70,8 @@ async function getSupabaseClientOrders() {
 export async function listOrdersRemote(): Promise<Order[]> {
   const supabase = await getSupabaseClientOrders();
   if (!supabase) return listOrders();
-  const { data, error } = await supabase.from('orders').select('*').order('createdAt', { ascending: false });
+  const table = typedFrom<Order>('orders');
+  const { data, error } = await table.select();
   if (error || !data) return listOrders();
   return data as Order[];
 }
@@ -88,7 +79,8 @@ export async function listOrdersRemote(): Promise<Order[]> {
 export async function saveOrderRemote(order: Order) {
   const supabase = await getSupabaseClientOrders();
   if (!supabase) return saveOrder(order);
-  const { error } = await supabase.from('orders').insert([order]);
+  const table = typedFrom<Order>('orders');
+  const { error } = await table.insert([order]);
   if (error) {
     console.error(error);
     return false;
@@ -99,7 +91,8 @@ export async function saveOrderRemote(order: Order) {
 export async function updateOrderStatusRemote(id: string, status: 'Pending' | 'Paid' | 'Delivered') {
   const supabase = await getSupabaseClientOrders();
   if (!supabase) return updateOrderStatus(id, status);
-  const { error } = await supabase.from('orders').update({ status }).eq('id', id);
+  const table = typedFrom<Order>('orders');
+  const { error } = await table.updateById(id, { status } as Partial<Order>);
   if (error) {
     console.error(error);
     return false;
@@ -110,7 +103,8 @@ export async function updateOrderStatusRemote(id: string, status: 'Pending' | 'P
 export async function deleteOrderRemote(id: string) {
   const supabase = await getSupabaseClientOrders();
   if (!supabase) return deleteOrder(id);
-  const { error } = await supabase.from('orders').delete().eq('id', id);
+  const table = typedFrom<Order>('orders');
+  const { error } = await table.deleteById(id);
   if (error) {
     console.error(error);
     return false;

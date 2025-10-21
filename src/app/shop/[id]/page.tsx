@@ -1,8 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { use } from "react";
+// useRouter and use are intentionally not used server-side in this page file
+// import { useRouter } from 'next/navigation';
+// import { use } from 'react';
 import { products } from "@/lib/products";
 import { useCartStore } from "@/store/cartStore";
 import { motion } from "framer-motion";

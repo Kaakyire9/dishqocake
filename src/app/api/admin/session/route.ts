@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'letmein';
@@ -15,7 +14,7 @@ export async function POST(req: Request) {
   const cookieValue = encodeURIComponent(JSON.stringify({ email }));
   res.headers.append('Set-Cookie', `admin-session=${cookieValue}; Path=/; HttpOnly; SameSite=Lax`);
   return res;
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: 'bad request' }, { status: 400 });
   }
 }

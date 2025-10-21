@@ -10,7 +10,7 @@ export default function CartCookieSync() {
     try {
       const payload = JSON.stringify({ items });
       document.cookie = `dishqo-cart=${encodeURIComponent(payload)}; path=/; samesite=lax`;
-    } catch (e) {
+    } catch {
       // ignore
     }
   }, [items]);

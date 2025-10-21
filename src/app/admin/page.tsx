@@ -1,19 +1,20 @@
 import React from "react";
 import { formatGhs } from "@/lib/orders";
 import { products } from "@/lib/products";
+import type { Order } from "@/types";
 
 export default function AdminIndex() {
   // compute simple totals from localStorage orders if present
-  let orders: any[] = [];
+  let orders: Order[] = [];
   try {
     const raw = typeof window !== 'undefined' ? localStorage.getItem('dishqo-orders') || '[]' : '[]';
-    orders = JSON.parse(raw || '[]');
-  } catch (e) {
+    orders = JSON.parse(raw || '[]') as Order[];
+  } catch {
     orders = [];
   }
 
-  const totalSales = orders.reduce((s: number, o: any) => s + (o.total || 0), 0);
-  const pendingCount = orders.filter((o: any) => (o.status || 'Pending') === 'Pending').length;
+  const totalSales = orders.reduce((s: number, o: Order) => s + (o.total || 0), 0);
+  const pendingCount = orders.filter((o: Order) => (o.status || 'Pending') === 'Pending').length;
 
   return (
     <div>

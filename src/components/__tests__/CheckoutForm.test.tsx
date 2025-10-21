@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import React from 'react';
 import { vi, describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
@@ -46,6 +45,6 @@ describe('CheckoutForm', () => {
     await user.click(placeBtn);
 
     // toast.error should be called with validation message
-    expect((toast as any).error).toHaveBeenCalledWith('Please fill name, phone and address');
+    expect(toast.error).toHaveBeenCalledWith('Please fill name, phone and address');
   });
 });

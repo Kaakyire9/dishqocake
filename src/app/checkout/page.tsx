@@ -1,6 +1,7 @@
 import CheckoutClient from "@/components/CheckoutClient";
 import { cookies } from "next/headers";
-import CopyButton from "@/components/CopyButton";
+// CopyButton intentionally unused in this build; keep import commented for later use
+// import CopyButton from "@/components/CopyButton";
 import CheckoutForm from "@/components/CheckoutForm";
 
 export default async function CheckoutPage() {
@@ -9,7 +10,7 @@ export default async function CheckoutPage() {
   let snapshot = null;
   try {
     if (raw) snapshot = JSON.parse(decodeURIComponent(raw));
-  } catch (e) {
+  } catch {
     snapshot = null;
   }
 

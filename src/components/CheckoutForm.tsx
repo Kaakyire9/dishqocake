@@ -7,8 +7,9 @@ import { saveOrder } from "@/lib/orders";
 import CopyButton from "./CopyButton";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "@/lib/toast";
+import type { CartItem, Order } from "@/types";
 
-type Props = { snapshot: any };
+type Props = { snapshot: { items?: CartItem[] } | null };
 
 export default function CheckoutForm({ snapshot }: Props) {
   const router = useRouter();
@@ -23,8 +24,8 @@ export default function CheckoutForm({ snapshot }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   // compute total from snapshot as fallback
-  const items = snapshot?.items ?? [];
-  const total = items.reduce((s: number, i: any) => s + (i.price ?? 0) * (i.quantity ?? 0), 0);
+  const items: CartItem[] = snapshot?.items ?? [];
+  const total = items.reduce((s: number, i: CartItem) => s + (i.price ?? 0) * (i.quantity ?? 0), 0);
 
   const onPlace = async () => {
     if (!checked) return;
@@ -35,7 +36,7 @@ export default function CheckoutForm({ snapshot }: Props) {
       return;
     }
     setSubmitting(true);
-    const order = {
+    const order: Order = {
       id: uuidv4(),
       name,
       phone,
@@ -44,9 +45,10 @@ export default function CheckoutForm({ snapshot }: Props) {
       items,
       total,
       createdAt: new Date().toISOString(),
+      status: 'Pending',
     };
 
-    const ok = saveOrder(order as any);
+    const ok = saveOrder(order);
     if (ok) {
       clear();
       toast.success('Order placed — thank you!');

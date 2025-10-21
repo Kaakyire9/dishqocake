@@ -8,7 +8,8 @@ export default function CopyButton({ text }: { text: string }) {
     try {
       await navigator.clipboard.writeText(text);
       toast.success('Copied to clipboard');
-    } catch (e) {
+    } catch {
+      // ignore clipboard errors in some browsers
       toast.error('Failed to copy');
     }
   };

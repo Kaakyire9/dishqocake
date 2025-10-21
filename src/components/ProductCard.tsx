@@ -5,17 +5,10 @@ import { motion } from "framer-motion";
 import { useCartStore } from "@/store/cartStore";
 import { formatGhs } from "@/lib/orders";
 import { toast } from "@/lib/toast";
-
-type Product = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-};
+import type { Product } from "@/types";
 
 export default function ProductCard({ product }: { product: Product }) {
-  const add = useCartStore((s: any) => s.addItem);
+  const add = useCartStore((s) => s.addItem);
 
   const onAdd = () => {
     add({ id: product.id, name: product.name, description: product.description, price: product.price, image: product.image }, 1);

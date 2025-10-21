@@ -3,21 +3,28 @@
 import React from 'react';
 import { formatGhs } from '@/lib/orders';
 import { toast } from '@/lib/toast';
+import type { Order } from '@/types';
 
 function StatusBadge({ status }: { status: string }) {
   const cls = status === 'Paid' ? 'bg-green-100 text-green-700' : status === 'Delivered' ? 'bg-blue-100 text-blue-700' : 'bg-yellow-100 text-yellow-700';
   return <span className={`px-2 py-1 rounded-full text-xs ${cls}`}>{status}</span>;
 }
 
-export default function AdminOrdersClient({ orders: initialOrders, updateOrder, deleteOrder }: any) {
-  const orders = initialOrders || [];
+type Props = {
+  orders?: Order[];
+  updateOrder: (payload: { id: string; status?: Order['status'] }) => Promise<unknown> | void;
+  deleteOrder: (id: string) => Promise<unknown> | void;
+};
+
+export default function AdminOrdersClient({ orders: initialOrders, updateOrder, deleteOrder }: Props) {
+  const orders = initialOrders || [] as Order[];
 
   const mark = async (id: string, status: 'Paid' | 'Delivered') => {
     try {
       await updateOrder({ id, status });
       toast.success(`Order ${status}`);
       window.location.reload();
-    } catch (e) {
+    } catch {
       toast.error('Failed to update order');
     }
   };
@@ -28,7 +35,7 @@ export default function AdminOrdersClient({ orders: initialOrders, updateOrder, 
       await deleteOrder(id);
       toast.success('Order deleted');
       window.location.reload();
-    } catch (e) {
+    } catch {
       toast.error('Failed to delete order');
     }
   };
@@ -48,10 +55,10 @@ export default function AdminOrdersClient({ orders: initialOrders, updateOrder, 
             </tr>
           </thead>
           <tbody>
-            {orders.map((o: any) => (
+            {orders.map((o) => (
               <tr key={o.id} className="border-b">
                 <td className="p-3">{o.id}</td>
-                <td className="p-3">{o.name}  {o.phone}</td>
+                <td className="p-3">{o.name} — {o.phone}</td>
                 <td className="p-3">{formatGhs(o.total)}</td>
                 <td className="p-3"><StatusBadge status={o.status || 'Pending'} /></td>
                 <td className="p-3 flex gap-2">
