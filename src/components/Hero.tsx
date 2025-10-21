@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function Hero() {
@@ -17,8 +18,8 @@ export default function Hero() {
           <p className="mt-4 text-lg text-gray-600 max-w-xl">Delicious cakes and pastries made fresh daily. Order online or visit our bakery to taste the magic.</p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="/shop" className="inline-block bg-pink-600 text-white px-6 py-3 rounded-md shadow hover:scale-[1.02] transition">Shop Now</a>
-            <a href="/contact" className="inline-block border border-pink-200 text-pink-600 px-6 py-3 rounded-md shadow-sm hover:bg-pink-50 transition">Contact Us</a>
+            <Link href="/shop" className="inline-block bg-pink-600 text-white px-6 py-3 rounded-md shadow hover:scale-[1.02] transition">Shop Now</Link>
+            <Link href="/contact" className="inline-block border border-pink-200 text-pink-600 px-6 py-3 rounded-md shadow-sm hover:bg-pink-50 transition">Contact Us</Link>
           </div>
         </motion.div>
 

@@ -7,7 +7,7 @@ import { toast } from '@/lib/toast';
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [adminKey, setAdminKey] = useState('');
+  // admin key/state not used in client; authentication handled server-side
   const router = useRouter();
 
   const onLogin = () => {
@@ -21,7 +21,7 @@ export default function AdminLogin() {
         } else {
           toast.error('Invalid credentials');
         }
-      } catch (e) {
+      } catch {
         toast.error('Login failed');
       }
     })();

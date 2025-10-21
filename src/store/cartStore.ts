@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Product } from "@/lib/products";
+import type { Product } from "@/types";
 
 export type CartItem = Product & { quantity: number };
 

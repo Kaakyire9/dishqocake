@@ -1,10 +1,5 @@
-export type Product = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-};
+import type { Product } from "@/types";
+import { typedFrom } from '@/lib/supabaseClient';
 
 export const products: Product[] = [
   { id: "1", name: "Classic Vanilla Cake", description: "Soft vanilla sponge with buttercream.", price: 25, image: "/products/vanilla.svg" },
@@ -21,7 +16,7 @@ export function listProducts(): Product[] {
   try {
     const raw = typeof window !== 'undefined' ? localStorage.getItem(PRODUCTS_KEY) : null;
     if (raw) return JSON.parse(raw);
-  } catch (e) {
+  } catch {
     // ignore
   }
   return products;
@@ -31,8 +26,8 @@ export function saveProducts(list: Product[]) {
   try {
     localStorage.setItem(PRODUCTS_KEY, JSON.stringify(list));
     return true;
-  } catch (e) {
-    console.error(e);
+  } catch (_e) {
+    console.error(_e);
     return false;
   }
 }
@@ -62,16 +57,15 @@ export function deleteProduct(id: string) {
 // NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY. If Supabase
 // is not configured or the import fails, they fall back to localStorage.
 
-async function getSupabaseClient() {
+async function getSupabaseClient(): Promise<unknown | null> {
   try {
     const url = process?.env?.NEXT_PUBLIC_SUPABASE_URL;
     const key = process?.env?.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     if (!url || !key) return null;
-    // dynamic import so package is optional
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { createClient } = await import('@supabase/supabase-js');
+  // dynamic import so package is optional
+  const { createClient } = await import('@supabase/supabase-js');
     return createClient(url, key);
-  } catch (e) {
+  } catch {
     // package not installed or other error
     return null;
   }
@@ -80,7 +74,9 @@ async function getSupabaseClient() {
 export async function listProductsRemote(): Promise<Product[]> {
   const supabase = await getSupabaseClient();
   if (!supabase) return listProducts();
-  const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+  // supabase is unknown; cast locally where we call .from()
+  const table = typedFrom<Product>('products');
+  const { data, error } = await table.select();
   if (error || !data) return listProducts();
   return data as Product[];
 }
@@ -88,7 +84,8 @@ export async function listProductsRemote(): Promise<Product[]> {
 export async function addProductRemote(p: Product) {
   const supabase = await getSupabaseClient();
   if (!supabase) return addProduct(p);
-  const { error } = await supabase.from('products').insert([p]);
+  const table = typedFrom<Product>('products');
+  const { error } = await table.insert([p]);
   if (error) {
     console.error(error);
     return false;
@@ -99,7 +96,8 @@ export async function addProductRemote(p: Product) {
 export async function updateProductRemote(id: string, patch: Partial<Product>) {
   const supabase = await getSupabaseClient();
   if (!supabase) return updateProduct(id, patch);
-  const { error } = await supabase.from('products').update(patch).eq('id', id);
+  const table = typedFrom<Product>('products');
+  const { error } = await table.updateById(id, patch as Partial<Product>);
   if (error) {
     console.error(error);
     return false;
@@ -110,7 +108,8 @@ export async function updateProductRemote(id: string, patch: Partial<Product>) {
 export async function deleteProductRemote(id: string) {
   const supabase = await getSupabaseClient();
   if (!supabase) return deleteProduct(id);
-  const { error } = await supabase.from('products').delete().eq('id', id);
+  const table = typedFrom<Product>('products');
+  const { error } = await table.deleteById(id);
   if (error) {
     console.error(error);
     return false;

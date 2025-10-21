@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server';
-import { getSupabaseServer } from '@/lib/supabaseServer';
+import { getSupabaseServerClient as getSupabaseServer } from '@/lib/supabaseServer';
 import { listOrders } from '@/lib/orders';
 import { getAdminSession } from '@/lib/session';
 
-const ADMIN_HEADER = 'x-admin-key';
+// const ADMIN_HEADER = 'x-admin-key';
 
 export async function GET() {
   const supabase = getSupabaseServer();
   if (!supabase) return NextResponse.json(listOrders());
-  const { data, error } = await supabase.from('orders').select('*').order('created_at', { ascending: false });
+  const table = (await import('@/lib/supabaseClient')).typedFrom<unknown>('orders');
+  const { data, error } = await table.select();
   if (error) return NextResponse.json({ error }, { status: 500 });
   return NextResponse.json(data);
 }
@@ -21,7 +22,8 @@ export async function POST(req: Request) {
     // fallback to local storage not possible from server — return 501
     return NextResponse.json({ error: 'Supabase not configured on server' }, { status: 501 });
   }
-  const { data, error } = await supabase.from('orders').insert([body]);
+  const table = (await import('@/lib/supabaseClient')).typedFrom<unknown>('orders');
+  const { data, error } = await table.insert([body]);
   if (error) return NextResponse.json({ error }, { status: 500 });
   return NextResponse.json(data);
 }
@@ -33,7 +35,9 @@ export async function PUT(req: Request) {
   if (!supabase) return NextResponse.json({ error: 'Supabase not configured on server' }, { status: 501 });
   const body = await req.json();
   const { id, ...patch } = body;
-  const { data, error } = await supabase.from('orders').update(patch).eq('id', id);
+  const table = (await import('@/lib/supabaseClient')).typedFrom<unknown>('orders');
+  const safePatch = patch as Partial<Record<string, unknown>>;
+  const { data, error } = await table.updateById(id as string, safePatch);
   if (error) return NextResponse.json({ error }, { status: 500 });
   return NextResponse.json(data);
 }
@@ -45,7 +49,8 @@ export async function DELETE(req: Request) {
   if (!supabase) return NextResponse.json({ error: 'Supabase not configured on server' }, { status: 501 });
   const url = new URL(req.url);
   const id = url.searchParams.get('id');
-  const { data, error } = await supabase.from('orders').delete().eq('id', id);
+  const table = (await import('@/lib/supabaseClient')).typedFrom<unknown>('orders');
+  const { error } = await table.deleteById(id as string);
   if (error) return NextResponse.json({ error }, { status: 500 });
   return NextResponse.json({ ok: true });
 }
