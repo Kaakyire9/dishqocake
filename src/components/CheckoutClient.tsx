@@ -41,11 +41,21 @@ export default function CheckoutClient({ snapshot }: Props) {
         {displayItems.map((it: CartItem) => (
           <div key={it.id} className="flex items-center gap-4 py-3 border-b last:border-b-0">
             <div className="w-20 h-16 relative rounded overflow-hidden">
-              <Image src={it.image} alt={it.name} fill className="object-cover" />
+              {it.image ? (
+                <Image src={it.image} alt={it.name} fill className="object-cover" />
+              ) : (
+                <svg width="80" height="64" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-90">
+                  <rect x="0" y="0" width="80" height="64" rx="8" fill="#fff7f9" />
+                  <path d="M20 38c5-9 15-9 20 0 5-9 15-9 20 0v10H20V38z" fill="#ffd7e6" />
+                </svg>
+              )}
             </div>
             <div className="flex-1">
               <div className="flex justify-between">
-                <h4 className="font-semibold text-pink-700">{it.name}</h4>
+                <div>
+                  <h4 className="font-semibold text-pink-700">{it.name}</h4>
+                  {it.options?.layers && <div className="text-sm text-gray-600">Layers: {it.options.layers}</div>}
+                </div>
                 <div className="text-pink-600 font-bold">{formatGhs((it.price ?? 0) * (it.quantity ?? 0))}</div>
               </div>
               <div className="text-sm text-gray-600">Qty: {it.quantity}</div>

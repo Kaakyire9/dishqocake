@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="w-full bg-gradient-to-r from-pink-50 via-pink-100 to-amber-50">
+  <section className="w-full bg-linear-to-r from-pink-50 via-pink-100 to-amber-50">
       <div className="max-w-6xl mx-auto px-6 py-16 lg:py-24 flex flex-col-reverse lg:flex-row items-center gap-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -18,7 +18,7 @@ export default function Hero() {
           <p className="mt-4 text-lg text-gray-600 max-w-xl">Delicious cakes and pastries made fresh daily. Order online or visit our bakery to taste the magic.</p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/shop" className="inline-block bg-pink-600 text-white px-6 py-3 rounded-md shadow hover:scale-[1.02] transition">Shop Now</Link>
+            <Link href="/shop" className="inline-block bg-pink-600 text-white px-6 py-3 rounded-md shadow hover:scale-[1.02] transition">Order now</Link>
             <Link href="/contact" className="inline-block border border-pink-200 text-pink-600 px-6 py-3 rounded-md shadow-sm hover:bg-pink-50 transition">Contact Us</Link>
           </div>
         </motion.div>

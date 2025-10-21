@@ -6,8 +6,14 @@ export type Product = {
   image: string;
 };
 
+export type SelectedOptions = {
+  layers?: number;
+  [key: string]: unknown;
+};
+
 export type CartItem = Product & {
   quantity: number;
+  options?: SelectedOptions;
 };
 
 export type Order = {

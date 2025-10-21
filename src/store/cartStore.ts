@@ -1,32 +1,34 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Product } from "@/types";
-
-export type CartItem = Product & { quantity: number };
+import type { Product, CartItem, SelectedOptions } from "@/types";
 
 export type CartState = {
   items: CartItem[];
-  addItem: (p: Product, qty?: number) => void;
+  addItem: (p: Product & { options?: SelectedOptions }, qty?: number) => void;
   removeItem: (id: string) => void;
   clearCart: () => void;
   increase: (id: string) => void;
   decrease: (id: string) => void;
   totalPrice: () => number;
+  lastAddedAt?: number | null;
 };
 
 export const useCartStore = create<CartState>()(
   persist<CartState>(
     (set, get) => ({
       items: [],
-      addItem: (p: Product, qty = 1) => {
+  lastAddedAt: null,
+      addItem: (p: Product & { options?: SelectedOptions }, qty = 1) => {
         const items = get().items.slice();
-        const idx = items.findIndex((i) => i.id === p.id);
+        // Consider items distinct by id + options JSON
+        const key = `${p.id}::${JSON.stringify(p.options ?? {})}`;
+        const idx = items.findIndex((i) => `${i.id}::${JSON.stringify(i.options ?? {})}` === key);
         if (idx >= 0) {
           items[idx].quantity += qty;
         } else {
-          items.push({ ...p, quantity: qty });
+          items.push({ ...p, quantity: qty } as CartItem);
         }
-        set({ items });
+        set({ items, lastAddedAt: Date.now() });
       },
       removeItem: (id: string) => set({ items: get().items.filter((i) => i.id !== id) }),
       clearCart: () => set({ items: [] }),
