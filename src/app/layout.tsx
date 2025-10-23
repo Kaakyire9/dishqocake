@@ -10,7 +10,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-sans bg-pink-50 text-gray-800">
+  <body className="font-sans bg-semantic-bg-surface text-semantic-text-primary">
         <Navbar />
         {children}
         <Footer />

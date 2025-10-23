@@ -61,7 +61,7 @@ export default function CheckoutForm({ snapshot }: Props) {
   };
 
   return (
-    <div className="bg-white rounded-lg p-4 shadow">
+    <div className="bg-semantic-surface-card rounded-lg p-4 shadow">
       <h3 className="font-semibold mb-4">Customer Details</h3>
       <div className="grid gap-3">
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" className="p-3 border rounded" />
@@ -74,8 +74,8 @@ export default function CheckoutForm({ snapshot }: Props) {
 
       <div className="mt-6">
         <h4 className="font-semibold mb-2">Momo Payment</h4>
-        <p className="text-sm text-gray-600 mb-3">Please send the total to the Mobile Money number below.</p>
-        <div className="bg-gray-50 p-3 rounded flex items-center justify-between">
+  <p className="text-sm text-semantic-text-muted mb-3">Please send the total to the Mobile Money number below.</p>
+  <div className="bg-soft-accent p-3 rounded flex items-center justify-between">
           <div>
             <div className="font-semibold">MTN</div>
             <div className="text-sm">024 123 4567</div>
@@ -88,7 +88,7 @@ export default function CheckoutForm({ snapshot }: Props) {
           <span className="text-sm">I have sent the money</span>
         </label>
 
-        <button disabled={!checked || submitting} onClick={onPlace} className="mt-4 w-full bg-pink-600 text-white py-2 rounded disabled:opacity-50">{submitting ? 'Placing...' : 'Place Order'}</button>
+  <button disabled={!checked || submitting} onClick={onPlace} className="mt-4 w-full bg-semantic-btn-cta hover:bg-semantic-btn-cta-hover text-white py-2 rounded disabled:opacity-50">{submitting ? 'Placing...' : 'Place Order'}</button>
       </div>
     </div>
   );

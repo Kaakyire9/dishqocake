@@ -19,23 +19,23 @@ export default function AdminIndex() {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white p-4 rounded-2xl shadow">
-          <div className="text-sm text-gray-500">Total Products</div>
-          <div className="text-2xl font-semibold text-pink-600">{products.length}</div>
+        <div className="bg-semantic-surface-card p-4 rounded-2xl shadow">
+          <div className="text-sm text-semantic-text-muted">Total Products</div>
+          <div className="text-2xl font-semibold text-semantic-accent-gold">{products.length}</div>
         </div>
-        <div className="bg-white p-4 rounded-2xl shadow">
-          <div className="text-sm text-gray-500">Total Sales</div>
+        <div className="bg-semantic-surface-card p-4 rounded-2xl shadow">
+          <div className="text-sm text-semantic-text-muted">Total Sales</div>
           <div className="text-2xl font-semibold">{formatGhs(totalSales)}</div>
         </div>
-        <div className="bg-white p-4 rounded-2xl shadow">
-          <div className="text-sm text-gray-500">Pending Orders</div>
+        <div className="bg-semantic-surface-card p-4 rounded-2xl shadow">
+          <div className="text-sm text-semantic-text-muted">Pending Orders</div>
           <div className="text-2xl font-semibold">{pendingCount}</div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white p-4 rounded-2xl shadow">Quick actions and stats go here.</div>
-        <div className="bg-white p-4 rounded-2xl shadow">Recent activity and orders preview.</div>
+  <div className="bg-semantic-surface-card p-4 rounded-2xl shadow">Quick actions and stats go here.</div>
+  <div className="bg-semantic-surface-card p-4 rounded-2xl shadow">Recent activity and orders preview.</div>
       </div>
     </div>
   );

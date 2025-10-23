@@ -16,7 +16,7 @@ export default async function CheckoutPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-12">
-      <h1 className="text-2xl font-bold text-pink-700 mb-6">Checkout</h1>
+  <h1 className="text-2xl font-bold text-semantic-text-primary mb-6">Checkout</h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <CheckoutClient snapshot={snapshot} />

@@ -28,14 +28,14 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-2xl p-6 shadow">
+  <div className="max-w-md mx-auto bg-semantic-surface-card rounded-2xl p-6 shadow">
       <h3 className="text-lg font-semibold mb-4">Admin Login</h3>
       <div className="grid gap-3">
         <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="p-3 border rounded" />
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="p-3 border rounded" />
   {/* service role key should not be stored in browser; handled server-side */}
         <div className="flex justify-end">
-          <button onClick={onLogin} className="bg-pink-600 text-white px-4 py-2 rounded">Login</button>
+          <button onClick={onLogin} className="bg-semantic-btn-cta hover:bg-semantic-btn-cta-hover text-white px-4 py-2 rounded">Login</button>
         </div>
       </div>
     </div>

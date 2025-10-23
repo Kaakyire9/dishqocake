@@ -46,16 +46,16 @@ export default function CartPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
-      <h1 className="text-2xl font-bold text-pink-700 mb-6">Your Cart</h1>
+  <h1 className="text-2xl font-bold text-semantic-text-primary mb-6">Your Cart</h1>
 
       {items.length === 0 ? (
-        <div className="text-center py-20 text-gray-600">Your cart is empty — time to treat yourself 🍰</div>
+        <div className="text-center py-20 text-semantic-text-muted">Your cart is empty — time to treat yourself 🍰</div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <AnimatePresence>
               {items.map((it) => (
-                <motion.div key={it.id} initial={{ opacity: 0, y: 8 }} animate={animatingIds[it.id] ? { scale: [1, 1.03, 1] } : { opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35 }} className="flex items-center gap-4 p-4 bg-white rounded-lg shadow mb-3">
+                <motion.div key={it.id} initial={{ opacity: 0, y: 8 }} animate={animatingIds[it.id] ? { scale: [1, 1.03, 1] } : { opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35 }} className="flex items-center gap-4 p-4 bg-semantic-surface-card rounded-lg shadow mb-3">
                   <div className="w-28 h-20 relative rounded-md overflow-hidden">
                     {it.image ? (
                       <Image src={it.image} alt={it.name} fill className="object-cover" />
@@ -71,19 +71,19 @@ export default function CartPage() {
                     )}
                   </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-pink-700">{it.name}</h3>
-                        <p className="text-sm text-gray-600">{formatGhs(it.price)}</p>
+                        <h3 className="font-semibold text-semantic-text-primary">{it.name}</h3>
+                        <p className="text-sm text-semantic-text-muted">{formatGhs(it.price)}</p>
                         {/* Layers editor for round cakes */}
                         {it.id.startsWith('round-') && (
                           <div className="mt-2 flex items-center gap-2">
-                            <label className="text-sm text-gray-600">Layers:</label>
+                            <label className="text-sm text-semantic-text-muted">Layers:</label>
                             <div className="flex gap-2">
                               {(() => {
                                 const parts = it.id.split('-');
                                 const inches = parts[1];
                                 const opts = (roundPrices as Record<string, { layers: number; price: number }[]>)[inches] ?? [];
                                 return opts.map((o: { layers: number; price: number }) => (
-                                  <button key={o.layers} onClick={() => changeLayers(it, o.layers)} className={`px-2 py-1 rounded ${it.options?.layers === o.layers ? 'bg-pink-600 text-white' : 'bg-gray-100'}`}>
+                                  <button key={o.layers} onClick={() => changeLayers(it, o.layers)} className={`px-2 py-1 rounded ${it.options?.layers === o.layers ? 'bg-semantic-btn-cta text-white' : 'bg-semantic-surface-muted'}`}>
                                     {o.layers}
                                   </button>
                                 ));
@@ -92,9 +92,9 @@ export default function CartPage() {
                           </div>
                         )}
                         <div className="mt-2 flex items-center gap-2">
-                          <button onClick={() => decrease(it.id)} className="px-2 py-1 bg-gray-100 rounded">-</button>
+                          <button onClick={() => decrease(it.id)} className="px-2 py-1 bg-semantic-surface-muted rounded">-</button>
                           <span className="px-3">{it.quantity}</span>
-                          <button onClick={() => increase(it.id)} className="px-2 py-1 bg-gray-100 rounded">+</button>
+                          <button onClick={() => increase(it.id)} className="px-2 py-1 bg-semantic-surface-muted rounded">+</button>
                           <button onClick={() => remove(it.id)} className="ml-4 text-sm text-red-500">Remove</button>
                         </div>
                       </div>
@@ -103,13 +103,13 @@ export default function CartPage() {
             </AnimatePresence>
           </div>
 
-          <aside className="bg-white rounded-lg p-6 shadow">
+          <aside className="bg-semantic-surface-card rounded-lg p-6 shadow">
             <h4 className="font-semibold text-lg">Summary</h4>
             <div className="mt-4 flex justify-between">
-              <span className="text-gray-600">Total</span>
-              <span className="font-bold text-pink-700">{formatGhs(total)}</span>
+              <span className="text-semantic-text-muted">Total</span>
+              <span className="font-bold text-semantic-accent-gold">{formatGhs(total)}</span>
             </div>
-            <Link href="/checkout" className="mt-6 block text-center w-full bg-pink-600 text-white py-3 rounded">Checkout</Link>
+            <Link href="/checkout" className="mt-6 block text-center w-full bg-semantic-btn-cta hover:bg-semantic-btn-cta-hover text-white py-3 rounded">Checkout</Link>
           </aside>
         </div>
       )}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+  <defs>
+    <linearGradient id="lg" x1="0" x2="1">
+      <stop offset="0" stop-color="#ffeff3"/>
+      <stop offset="1" stop-color="#fff1f6"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" rx="28" fill="url(#lg)" />
+  <g transform="translate(20,24)" fill="#d64b7a">
+    <path d="M40 20c12 0 20 8 20 20s-8 20-20 20-20-8-20-20 8-20 20-20z" />
+    <path d="M60 20c6 0 10 4 10 10s-4 10-10 10-10-4-10-10 4-10 10-10z" opacity="0.9"/>
+  </g>
+  <text x="80" y="138" font-family="Georgia, serif" font-size="18" fill="#b34b6b" text-anchor="middle">DishQo</text>
+</svg>

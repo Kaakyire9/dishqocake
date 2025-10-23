@@ -6,7 +6,7 @@ import { toast } from '@/lib/toast';
 import type { Order } from '@/types';
 
 function StatusBadge({ status }: { status: string }) {
-  const cls = status === 'Paid' ? 'bg-green-100 text-green-700' : status === 'Delivered' ? 'bg-blue-100 text-blue-700' : 'bg-yellow-100 text-yellow-700';
+  const cls = status === 'Paid' ? 'bg-green-100 text-green-700' : status === 'Delivered' ? 'bg-blue-100 text-blue-700' : 'bg-soft-accent text-yellow-700';
   return <span className={`px-2 py-1 rounded-full text-xs ${cls}`}>{status}</span>;
 }
 
@@ -43,7 +43,7 @@ export default function AdminOrdersClient({ orders: initialOrders, updateOrder, 
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Orders</h2>
-      <div className="bg-white rounded-2xl shadow overflow-auto">
+  <div className="bg-semantic-surface-card rounded-2xl shadow overflow-auto">
         <table className="w-full">
           <thead className="text-left">
             <tr className="border-b">

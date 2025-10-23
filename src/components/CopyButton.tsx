@@ -15,6 +15,6 @@ export default function CopyButton({ text }: { text: string }) {
   };
 
   return (
-    <button onClick={onCopy} className="bg-pink-600 text-white px-3 py-2 rounded">Copy</button>
+  <button onClick={onCopy} className="bg-semantic-btn-cta hover:bg-semantic-btn-cta-hover text-white px-3 py-2 rounded">Copy</button>
   );
 }

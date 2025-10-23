@@ -36,7 +36,7 @@ export default function CheckoutClient({ snapshot }: Props) {
 
   return (
     <div>
-      <div className="bg-white rounded-lg p-4 shadow mb-6">
+  <div className="bg-semantic-surface-card rounded-lg p-4 shadow mb-6">
         <h3 className="font-semibold mb-4">Order Summary</h3>
         {displayItems.map((it: CartItem) => (
           <div key={it.id} className="flex items-center gap-4 py-3 border-b last:border-b-0">
@@ -53,12 +53,12 @@ export default function CheckoutClient({ snapshot }: Props) {
             <div className="flex-1">
               <div className="flex justify-between">
                 <div>
-                  <h4 className="font-semibold text-pink-700">{it.name}</h4>
-                  {it.options?.layers && <div className="text-sm text-gray-600">Layers: {it.options.layers}</div>}
+                  <h4 className="font-semibold text-semantic-text-primary">{it.name}</h4>
+                  {it.options?.layers && <div className="text-sm text-semantic-text-muted">Layers: {it.options.layers}</div>}
                 </div>
-                <div className="text-pink-600 font-bold">{formatGhs((it.price ?? 0) * (it.quantity ?? 0))}</div>
+                <div className="text-semantic-accent-gold font-bold">{formatGhs((it.price ?? 0) * (it.quantity ?? 0))}</div>
               </div>
-              <div className="text-sm text-gray-600">Qty: {it.quantity}</div>
+                  <div className="text-sm text-semantic-text-muted">Qty: {it.quantity}</div>
             </div>
           </div>
         ))}
