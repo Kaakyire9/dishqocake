@@ -12,9 +12,9 @@ function Star({ className = "" }: { className?: string }) {
 
 export default function Testimonials() {
   const items = [
-    { name: 'Ama', quote: 'Best birthday cake ever — moist, pretty and delicious!', rating: 5 },
-    { name: 'Kojo', quote: 'Amazing flavor combos and great service. Highly recommend!', rating: 5 },
-    { name: 'Esi', quote: 'Arrived on time and tasted even better than it looked.', rating: 5 },
+  { name: 'Ama', quote: 'Best birthday cake ever — moist, pretty and delicious!', rating: 5 },
+  { name: 'Kojo', quote: 'Amazing flavor combos and great service. Highly recommend!', rating: 5 },
+  { name: 'Esi', quote: 'Arrived on time and tasted even better than it looked.', rating: 5 },
   ];
 
   return (
@@ -32,7 +32,7 @@ export default function Testimonials() {
                 </div>
               </div>
             </div>
-            <p className="text-semantic-text-muted">"{it.quote}"</p>
+            <p className="text-semantic-text-muted">&quot;{it.quote}&quot;</p>
           </motion.div>
         ))}
       </div>

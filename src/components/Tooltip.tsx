@@ -9,7 +9,9 @@ export default function Tooltip({ content, children }: { content: string; childr
 
   return (
     <span className="relative inline-block" onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)} onFocus={() => setShow(true)} onBlur={() => setShow(false)}>
-      {React.cloneElement(children as any, { 'aria-describedby': `tooltip-${id}` })}
+      {React.isValidElement(children)
+        ? React.cloneElement(children as React.ReactElement<Record<string, unknown>>, { 'aria-describedby': `tooltip-${id}` })
+        : children}
 
       <AnimatePresence>
         {show && (

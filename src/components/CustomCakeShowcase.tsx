@@ -9,14 +9,6 @@ import { roundPrices as sharedRoundPrices, squarePrices as sharedSquarePrices, s
 import { useCartStore } from "@/store/cartStore";
 import type { Product } from "@/types";
 
-function CakeIcon({ className = "", size = 20 }: { className?: string; size?: number }) {
-  return (
-    <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 3c1.1 0 2 .9 2 2h4v2H6V5h4c0-1.1.9-2 2-2z" fill="currentColor" />
-      <path d="M4 9h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9z" fill="currentColor" opacity="0.9" />
-    </svg>
-  );
-}
 
 function SliceIcon({ className = "", size = 20 }: { className?: string; size?: number }) {
   return (
@@ -65,7 +57,7 @@ export default function CustomCakeShowcase() {
     inches,
     description: "Whipped cream round",
     duration: inches <= 5 ? "24-48 hours" : "2-4 days",
-    options: (sharedRoundPrices as any)[String(inches)] ?? [],
+    options: (sharedRoundPrices as Record<string, { layers: number; price: number }[]>)[String(inches)] ?? [],
   }));
 
   function SizeCard({
@@ -94,12 +86,12 @@ export default function CustomCakeShowcase() {
     return (
     <div className="bg-semantic-surface-card rounded-2xl shadow-md overflow-hidden">
   <div className="w-full h-40 bg-semantic-surface-muted relative flex items-center justify-center">
-          <svg width="160" height="120" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-90">
-            <rect x="0" y="0" width="160" height="120" rx="12" fill="#fff7f9" />
-            <path d="M40 70c10-18 30-18 40 0 10-18 30-18 40 0v20H40V70z" fill="#ffd7e6" />
-            <ellipse cx="80" cy="72" rx="48" ry="12" fill="#fff1f4" />
-            <text x="80" y="100" textAnchor="middle" fontSize="12" fill="#b34b6b">{inches}\"</text>
-          </svg>
+              <svg width="160" height="120" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-90">
+              <rect x="0" y="0" width="160" height="120" rx="12" fill="#fff7f9" />
+              <path d="M40 70c10-18 30-18 40 0 10-18 30-18 40 0v20H40V70z" fill="#ffd7e6" />
+              <ellipse cx="80" cy="72" rx="48" ry="12" fill="#fff1f4" />
+              <text x="80" y="100" textAnchor="middle" fontSize="12" fill="#b34b6b">{inches}&quot;</text>
+            </svg>
         </div>
         <div className="p-4">
           <h3 className="font-semibold text-lg text-semantic-text-primary">{prod.name}</h3>
@@ -138,7 +130,7 @@ export default function CustomCakeShowcase() {
     image: p.image || "/images/cake-placeholder.jpg",
   });
 
-  const squareSizes = [6, 8, 10, 12].map((inches) => ({ inches, description: 'Whipped cream square', options: (sharedSquarePrices as any)[String(inches)] ?? [] }));
+  const squareSizes = [6, 8, 10, 12].map((inches) => ({ inches, description: 'Whipped cream square', options: (sharedSquarePrices as Record<string, { layers: number; price: number }[]>)[String(inches)] ?? [] }));
 
   const sheetCakes = sharedSheetPrices;
 

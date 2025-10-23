@@ -12,8 +12,8 @@ export default function MinimalPreview() {
           <p className="mt-4 text-lg text-[#666666]">Delicious cakes and pastries made fresh daily. Order online or visit our bakery to taste the magic.</p>
 
           <div className="mt-8 flex gap-3">
-            <a href="/shop" className="inline-block bg-[#E86F2A] text-white px-6 py-3 rounded-md shadow">Order now</a>
-            <a href="/contact" className="inline-block border border-[#E86F2A] text-[#222222] px-6 py-3 rounded-md">Contact Us</a>
+            <Link href="/shop" className="inline-block bg-[#E86F2A] text-white px-6 py-3 rounded-md shadow">Order now</Link>
+            <Link href="/contact" className="inline-block border border-[#E86F2A] text-[#222222] px-6 py-3 rounded-md">Contact Us</Link>
           </div>
         </div>
 

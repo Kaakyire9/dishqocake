@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export default function CreamRosePreview() {
   return (
@@ -11,8 +12,8 @@ export default function CreamRosePreview() {
           <p className="mt-4 text-lg text-[#5C4B37]">Delicious cakes and pastries made fresh daily. Order online or visit our bakery to taste the magic.</p>
 
           <div className="mt-8 flex gap-3">
-            <a href="/shop" className="inline-block bg-[#D4A88B] text-white px-6 py-3 rounded-md shadow">Order now</a>
-            <a href="/contact" className="inline-block border border-[#C9A96E] text-[#5C4B37] px-6 py-3 rounded-md">Contact Us</a>
+            <Link href="/shop" className="inline-block bg-[#D4A88B] text-white px-6 py-3 rounded-md shadow">Order now</Link>
+            <Link href="/contact" className="inline-block border border-[#C9A96E] text-[#5C4B37] px-6 py-3 rounded-md">Contact Us</Link>
           </div>
         </div>
 

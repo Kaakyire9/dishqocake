@@ -19,7 +19,7 @@ export default function CartPage() {
 
   // price table imported from shared module (see top-level import)
 
-  function changeLayers(item: any, newLayers: number) {
+  function changeLayers(item: { id: string; description?: string; image?: string; quantity?: number }, newLayers: number) {
     try {
       // parse inches from id like 'round-6-2'
       const parts = item.id.split('-');
@@ -39,7 +39,7 @@ export default function CartPage() {
       // trigger animation for newId
       setAnimatingIds((s) => ({ ...s, [newId]: true }));
       setTimeout(() => setAnimatingIds((s) => { const copy = { ...s }; delete copy[newId]; return copy; }), 350);
-    } catch (e) {
+    } catch {
       // ignore
     }
   }

@@ -12,8 +12,8 @@ export default function PlayfulPreview() {
           <p className="mt-4 text-lg text-[#7A6A5E]">Delicious cakes and pastries made fresh daily. Order online or visit our bakery to taste the magic.</p>
 
           <div className="mt-8 flex gap-3">
-            <a href="/shop" className="inline-block bg-[#FDBE3B] text-[#3F2A22] px-6 py-3 rounded-md shadow">Order now</a>
-            <a href="/contact" className="inline-block border border-[#F6B8C6] text-[#3F2A22] px-6 py-3 rounded-md">Contact Us</a>
+            <Link href="/shop" className="inline-block bg-[#FDBE3B] text-[#3F2A22] px-6 py-3 rounded-md shadow">Order now</Link>
+            <Link href="/contact" className="inline-block border border-[#F6B8C6] text-[#3F2A22] px-6 py-3 rounded-md">Contact Us</Link>
           </div>
         </div>
 
