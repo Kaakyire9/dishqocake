@@ -24,3 +24,65 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Background helper for the SVG animated backdrop */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.site-bg svg { width: 100%; height: 100%; display: block; }
+
+.bg-animate-drift { transform-origin: 50% 50%; animation: drift 60s linear infinite; }
+.filigree-anim { animation: filigree-sway 40s ease-in-out infinite; }
+
+@keyframes drift {
+  0% { transform: translate3d(0,0,0); }
+  50% { transform: translate3d(3%, -6%, 0); }
+  100% { transform: translate3d(0,0,0); }
+}
+
+@keyframes filigree-sway {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-2px) rotate(-0.06deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-animate-drift, .filigree-anim { animation: none !important; }
+}
+
+/* Liquid glass overlay used on hero cards */
+.liquid-glass {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.06));
+  border: 1px solid rgba(255,255,255,0.28);
+  box-shadow: 0 12px 30px rgba(16,24,40,0.06), inset 0 1px 0 rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.liquid-glass::after {
+  content: "";
+  position: absolute;
+  left: -10%;
+  top: -30%;
+  width: 60%;
+  height: 40%;
+  background: linear-gradient(90deg, rgba(255,255,255,0.45), rgba(255,255,255,0));
+  transform: rotate(-18deg);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-glass { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .liquid-glass::after { display: none; }
+}
