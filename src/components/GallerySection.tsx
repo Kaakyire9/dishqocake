@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function GallerySection() {
@@ -14,7 +13,12 @@ export default function GallerySection() {
       <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
         {images.map((src, i) => (
           <motion.div key={i} whileHover={{ scale: 1.03 }} className="relative rounded-lg overflow-hidden bg-semantic-surface-muted">
-            <Image src={src} alt={`Gallery ${i+1}`} width={640} height={480} className="object-cover w-full h-40" />
+              <picture>
+                {/* Primary: new JPG names (gallery1.jpg ... gallery6.jpg) */}
+                <source srcSet={`/gallery/gallery${i + 1}.jpg`} type="image/jpeg" />
+                {/* Fallback: keep the existing numbered SVGs in case JPG missing */}
+                <img src={`/gallery/${i + 1}.svg`} alt={`Gallery ${i + 1}`} width={640} height={480} className="object-cover w-full h-40" loading="lazy" />
+              </picture>
             <div className="absolute inset-0 pointer-events-none bg-linear-to-t from-black/10 via-transparent to-transparent opacity-0 hover:opacity-30 transition" />
           </motion.div>
         ))}
