@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ToastProvider from "@/components/ToastProvider";
+import Background from "@/components/Background";
 
 export default function RootLayout({
   children,
@@ -10,7 +11,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-  <body className="font-sans bg-semantic-bg-surface text-semantic-text-primary">
+      <body className="font-sans bg-semantic-bg-surface text-semantic-text-primary">
+        <Background />
         <Navbar />
         {children}
         <Footer />

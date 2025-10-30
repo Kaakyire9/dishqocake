@@ -30,7 +30,7 @@ export default function Navbar() {
         </Link>
       </Tooltip>
       <div className="flex items-center space-x-6">
-  <Link href="/shop" className="hover:text-semantic-text-primary">Shop</Link>
+  <Link href="/shop" className="hover:text-semantic-text-primary">Order</Link>
   <Link href="/contact" className="hover:text-semantic-text-primary">Contact</Link>
   <Link href="/admin" className="hover:text-semantic-text-primary">Admin</Link>
         <Link href="/cart" className="relative inline-flex items-center">

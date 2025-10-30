@@ -48,7 +48,8 @@ export default function Hero() {
           className="flex-1 flex justify-center lg:justify-end"
         >
           <div className="w-[360px] sm:w-[440px] lg:w-[520px] h-[220px] sm:h-[300px] lg:h-[360px] rounded-2xl overflow-hidden shadow-lg relative">
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffffcc,transparent)] mix-blend-overlay pointer-events-none" />
+            {/* Liquid glass overlay: subtle frosted effect with sheen */}
+            <div className="liquid-glass" />
             <Image src="/dishqo-hero.jpg" alt="DishQo hero" width={880} height={360} className="object-cover w-full h-full object-[center_45%]" />
           </div>
         </motion.div>

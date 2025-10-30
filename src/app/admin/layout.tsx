@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import AdminLogoutButton from '@/components/AdminLogoutButton';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   // Top-level admin layout — do not enforce session here so public pages like /admin/login can render.
@@ -12,7 +13,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Link href="/admin" className="px-3 py-2 rounded hover:bg-semantic-accent-gold/8">Dashboard</Link>
               <Link href="/admin/products" className="px-3 py-2 rounded hover:bg-semantic-accent-gold/8">Products</Link>
               <Link href="/admin/orders" className="px-3 py-2 rounded hover:bg-semantic-accent-gold/8">Orders</Link>
-              <Link href="/admin/login" className="px-3 py-2 rounded hover:bg-semantic-accent-gold/8">Login</Link>
+              <AdminLogoutButton />
             </nav>
           </aside>
 
