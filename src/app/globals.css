@@ -87,27 +87,9 @@ body {
   .liquid-glass::after { display: none; }
 }
 
-/* Disable heavy backdrop blur on small screens (phones) where it often looks like a global blur
-   and can hurt readability. This keeps the frosted look on larger devices, but turns off
-   backdrop-filter on narrow viewports. */
-@media (max-width: 640px) {
-  /* Broad disable: ensure no backdrop-filter or blur/filter effects affect the viewport on small screens. */
-  :root, html, body, #__next, .site-bg, .site-bg *,
-  .liquid-glass, [class*="backdrop-blur"], [class*="backdrop-filter"],
-  [style*="backdrop-filter"], [style*="filter"], * {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    filter: none !important;
-  }
-}
-
-/* ===================================================================
-   Global opt-out for frosted/glass effects
-   Add a single-place override that disables liquid-glass and any
-   backdrop/filter-based visual effects across all screen sizes.
-   Useful for debugging or temporarily turning off glassmorphism.
-   =================================================================== */
-.no-frosted * { /* apply to any element within a top-level container */
+/* Temporary global test: completely disable frosted/glass effects across the site.
+   This is reversible — remove this block when you want the visual style back. */
+.test-disable-frosted, .test-disable-frosted * {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   filter: none !important;
@@ -116,17 +98,9 @@ body {
   border: none !important;
 }
 
-/* Remove the decorative liquid glass overlay entirely */
-.liquid-glass { display: none !important; }
+/* Hide the decorative liquid glass overlay entirely */
+.test-disable-frosted .liquid-glass { display: none !important; }
 
-/* Neutralize common utility classes that create frosted surfaces */
-[class*="backdrop-blur"],
-.backdrop-blur, .backdrop-blur-sm, .backdrop-blur-md, .backdrop-blur-lg, .backdrop-blur-xl,
-.bg-semantic-surface-ghost, .bg-semantic-surface-card, .bg-semantic-surface {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  filter: none !important;
-  background: none !important;
-  box-shadow: none !important;
-  border: none !important;
-}
+/* Apply globally if desired by adding the class to <body> or #__next */
+/* Example: <body class="test-disable-frosted"> */
+
