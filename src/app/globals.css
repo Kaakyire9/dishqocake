@@ -100,3 +100,33 @@ body {
     filter: none !important;
   }
 }
+
+/* ===================================================================
+   Global opt-out for frosted/glass effects
+   Add a single-place override that disables liquid-glass and any
+   backdrop/filter-based visual effects across all screen sizes.
+   Useful for debugging or temporarily turning off glassmorphism.
+   =================================================================== */
+.no-frosted * { /* apply to any element within a top-level container */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Remove the decorative liquid glass overlay entirely */
+.liquid-glass { display: none !important; }
+
+/* Neutralize common utility classes that create frosted surfaces */
+[class*="backdrop-blur"],
+.backdrop-blur, .backdrop-blur-sm, .backdrop-blur-md, .backdrop-blur-lg, .backdrop-blur-xl,
+.bg-semantic-surface-ghost, .bg-semantic-surface-card, .bg-semantic-surface {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
