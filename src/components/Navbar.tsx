@@ -164,15 +164,16 @@ export default function Navbar() {
                              border border-white/10 rounded-md shadow-xl p-2 z-50"
                 >
                   {["Shop", "About", "Contact"].map((link) => (
-                    <Link
-                      key={link}
-                      href={`/${link.toLowerCase()}`}
-                      className="block px-3 py-2 rounded text-sm text-[#1a1a1a] dark:text-white/90 
-                                 hover:bg-white/10 dark:hover:bg-white/5 transition-colors
-                                 focus-visible:ring-2 focus-visible:ring-[#F89C27]"
-                    >
-                      {link}
-                    </Link>
+                      <Link
+                        key={link}
+                        href={`/${link.toLowerCase()}`}
+                        onClick={() => setMenuOpen(false)}
+                        className="block px-3 py-2 rounded text-sm text-[#1a1a1a] dark:text-white/90 
+                                   hover:bg-white/10 dark:hover:bg-white/5 transition-colors
+                                   focus-visible:ring-2 focus-visible:ring-[#F89C27]"
+                      >
+                        {link}
+                      </Link>
                   ))}
                 </motion.div>
               )}
