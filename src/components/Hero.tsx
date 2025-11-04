@@ -94,10 +94,10 @@ export default function Hero() {
           className="flex-1 flex justify-center lg:justify-end relative"
         >
           <div className="w-[360px] sm:w-[440px] lg:w-[520px] h-[220px] sm:h-[300px] lg:h-[360px] rounded-2xl overflow-hidden shadow-lg relative">
-            <div className={isMobile ? "mobile-glass" : "liquid-glass"} />
+            <div className={isMobile ? "mobile-glass" : "glass-no-blur"} />
               {/* Use next/image fill mode so the image covers the container without CSS width/height mismatch */}
               <Image
-                src="/dishqo-hero.jpg"
+                src="/images/dishqo-hero.png"
                 alt="DishQo hero"
                 fill
                 sizes="100vw"

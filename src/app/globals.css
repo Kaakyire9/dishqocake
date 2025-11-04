@@ -182,6 +182,37 @@ body {
     border: 1px solid rgba(255,255,255,0.1);
   }
 
+  /* Non-blurring glass overlay: keeps sheen and border but does NOT blur the image
+     Use this for hero/about cards where backdrop blur obscures the image (especially on iOS). */
+  .glass-no-blur {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+    mix-blend-mode: lighten;
+    pointer-events: none;
+    border-radius: inherit;
+    border: 1px solid rgba(255,255,255,0.06);
+    /* subtle sheen layer */
+  }
+
+  /* animated sheen for non-blur glass (subtle, non-blurring) */
+  .glass-no-blur::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(75deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 40%);
+    transform: translateX(-100%);
+    animation: glass-sheen 7s ease-in-out infinite;
+    opacity: 0.65;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glass-no-blur::before {
+      display: none;
+    }
+  }
+
   .order-shine {
     position: relative;
     overflow: hidden;
