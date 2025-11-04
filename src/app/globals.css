@@ -87,20 +87,120 @@ body {
   .liquid-glass::after { display: none; }
 }
 
-/* Temporary global test: completely disable frosted/glass effects across the site.
-   This is reversible — remove this block when you want the visual style back. */
-.test-disable-frosted, .test-disable-frosted * {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  filter: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
+/* === Gold shimmer animation (luxury hover effect) === */
+.group:hover::before {
+  animation: shimmer-slide 1.8s ease-in-out forwards;
 }
 
-/* Hide the decorative liquid glass overlay entirely */
-.test-disable-frosted .liquid-glass { display: none !important; }
+@keyframes shimmer-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
 
-/* Apply globally if desired by adding the class to <body> or #__next */
-/* Example: <body class="test-disable-frosted"> */
+/* === Elegant gold sheen effect for logo === */
+.group:hover::before {
+  animation: none; /* Prevent shimmer conflicts */
+}
+
+.group:hover span::before {
+  animation: logo-sheen 2.4s ease-in-out forwards;
+}
+
+@keyframes logo-sheen {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@layer utilities {
+  /* === HERO SECTION ENHANCEMENTS === */
+
+  @keyframes subtle-glow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .animate-subtle-glow {
+    background-size: 200% 200%;
+    animation: subtle-glow 12s ease-in-out infinite;
+  }
+
+  @keyframes glass-sheen {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  @keyframes rise {
+    0% { opacity: 0; transform: translateY(10px) scale(0.8); }
+    50% { opacity: 1; transform: translateY(-40px) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(1.1); }
+  }
+
+  .animate-rise {
+    animation: rise 4s ease-in-out infinite;
+  }
+
+  .liquid-glass {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+    backdrop-filter: blur(6px) saturate(130%);
+    mix-blend-mode: lighten;
+    border: 1px solid rgba(255,255,255,0.1);
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(75deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 40%);
+    transform: translateX(-100%);
+    animation: glass-sheen 7s ease-in-out infinite;
+  }
+
+  .mobile-glass {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(3px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .order-shine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .order-shine::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-20deg);
+  }
+
+  .order-shine:hover::before {
+    left: 125%;
+    transition: left 0.75s ease-in-out;
+  }
+}
 

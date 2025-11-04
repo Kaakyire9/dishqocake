@@ -8,6 +8,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        // alias so `bg-linear-to-r` behaves like Tailwind gradient utilities
+        'linear-to-r': 'linear-gradient(to right, var(--tw-gradient-stops))',
+      },
       colors: {
         dishqo: {
           gold: '#FDBE3B',
