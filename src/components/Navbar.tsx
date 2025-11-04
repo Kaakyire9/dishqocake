@@ -5,12 +5,15 @@ import Image from "next/image";
 import Tooltip from "./Tooltip";
 import CartCookieSync from "./CartCookieSync";
 import React, { useState, useRef, useEffect } from "react";
+import { useMenu } from "@/context/MenuProvider";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   // Cart syncing handled by CartCookieSync; badge animation removed for simplified navbar
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { menuOpen, setMenuOpen, toggle } = useMenu();
   const [srMessage, setSrMessage] = useState('');
+  const router = useRouter();
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   // Close menu on outside click or on Escape
@@ -29,7 +32,7 @@ export default function Navbar() {
       document.removeEventListener("mousedown", onDoc);
       document.removeEventListener("keydown", onKey);
     };
-  }, []);
+  }, [setMenuOpen]);
 
   // Announce menu open/close for screen readers
   useEffect(() => {
@@ -114,7 +117,7 @@ export default function Navbar() {
             <button
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((s) => !s)}
+              onClick={toggle}
               className="md:hidden inline-flex items-center justify-center p-2 rounded-md 
                          text-[#1a1a1a] dark:text-white hover:bg-white/10 
                          dark:hover:bg-white/5 focus-visible:ring-2 
@@ -163,18 +166,28 @@ export default function Navbar() {
                              bg-white/80 dark:bg-black/60 backdrop-blur-md 
                              border border-white/10 rounded-md shadow-xl p-2 z-50"
                 >
-                  {["Shop", "About", "Contact"].map((link) => (
-                      <Link
-                        key={link}
-                        href={`/${link.toLowerCase()}`}
-                        onClick={() => setMenuOpen(false)}
-                        className="block px-3 py-2 rounded text-sm text-[#1a1a1a] dark:text-white/90 
-                                   hover:bg-white/10 dark:hover:bg-white/5 transition-colors
-                                   focus-visible:ring-2 focus-visible:ring-[#F89C27]"
-                      >
-                        {link}
-                      </Link>
-                  ))}
+                    {['Shop', 'About', 'Contact'].map((link) => {
+                      const href = `/${link.toLowerCase()}`;
+                      return (
+                        <a
+                          key={link}
+                          href={href}
+                          onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                            // allow modifier clicks (open in new tab) and non-left clicks
+                            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                            e.preventDefault();
+                            setMenuOpen(false);
+                            // wait for close animation before navigating
+                            setTimeout(() => router.push(href), 200);
+                          }}
+                          className="block px-3 py-2 rounded text-sm text-[#1a1a1a] dark:text-white/90 
+                                     hover:bg-white/10 dark:hover:bg-white/5 transition-colors
+                                     focus-visible:ring-2 focus-visible:ring-[#F89C27]"
+                        >
+                          {link}
+                        </a>
+                      );
+                    })}
                 </motion.div>
               )}
             </AnimatePresence>
