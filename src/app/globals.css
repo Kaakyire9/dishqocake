@@ -235,3 +235,11 @@ body {
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  .liquid-glass, .mobile-glass {
+    background: rgba(0,0,0,0.08); /* subtle dark tint */
+    backdrop-filter: none;        /* or keep reduced blur if preferred */
+    -webkit-backdrop-filter: none;
+  }
+}
+
