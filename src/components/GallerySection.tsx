@@ -98,7 +98,7 @@ export default function GallerySection() {
   }, [openIndex]);
 
   return (
-    <section className="max-w-6xl mx-auto px-6 py-16 relative">
+  <section id="gallery" className="max-w-6xl mx-auto px-6 py-16 relative">
       <h2 className="text-3xl font-bold text-semantic-text-primary mb-8 text-center">DishQo Gallery</h2>
 
       {/* Masonry-like responsive grid */}
