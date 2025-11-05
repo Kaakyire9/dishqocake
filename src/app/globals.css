@@ -235,6 +235,31 @@ body {
   }
 }
 
+/* ======================================================================
+   TEMPORARY: Force light theme (hide dark mode)
+   Remove this block to re-enable dark-mode via user/system preference.
+   This override sets the main color variables and hints the browser to
+   treat the page as light. Use as a short-term measure only.
+   ====================================================================== */
+
+:root {
+  --background: #ffffff !important;
+  --foreground: #171717 !important;
+}
+
+html {
+  /* tell the UA to prefer light color rendering */
+  color-scheme: light !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  /* neutralize dark preference by restoring light variables */
+  :root {
+    --background: #ffffff !important;
+    --foreground: #171717 !important;
+  }
+}
+
 @supports (-webkit-backdrop-filter: none) {
   /* iOS/WebKit supports this property — adjust on small screens */
   @media (max-width: 767px) {
