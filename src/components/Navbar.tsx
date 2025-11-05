@@ -6,6 +6,7 @@ import Tooltip from "./Tooltip";
 import CartCookieSync from "./CartCookieSync";
 import React, { useState, useRef, useEffect } from "react";
 import { useMenu } from "@/context/MenuProvider";
+import { useCartStore } from "@/store/cartStore";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -13,6 +14,12 @@ export default function Navbar() {
   // Cart syncing handled by CartCookieSync; badge animation removed for simplified navbar
   const { menuOpen, setMenuOpen, toggle } = useMenu();
   const [srMessage, setSrMessage] = useState('');
+  const items = useCartStore((s) => s.items);
+  const lastAddedAt = useCartStore((s) => s.lastAddedAt);
+  const count = items.reduce((sum, it) => sum + (it.quantity ?? 0), 0);
+  // showTransient controls the flying/check animation; while it's true we hide the permanent count badge
+  const [showTransient, setShowTransient] = useState(false);
+  const [cartSrMessage, setCartSrMessage] = useState("");
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -44,6 +51,21 @@ export default function Navbar() {
     const t = setTimeout(() => setSrMessage(''), 800);
     return () => clearTimeout(t);
   }, [menuOpen]);
+
+  // transient badge animation when an item is added
+  useEffect(() => {
+    if (!lastAddedAt) return;
+    // trigger transient animation
+    setShowTransient(true);
+    // announce to screen readers
+    setCartSrMessage(`Added to cart. ${count} item${count === 1 ? "" : "s"} in cart.`);
+    const t = setTimeout(() => {
+      setShowTransient(false);
+      // clear SR message after a short delay
+      setTimeout(() => setCartSrMessage(""), 700);
+    }, 900);
+    return () => clearTimeout(t);
+  }, [lastAddedAt, count]);
 
   return (
     <nav
@@ -132,6 +154,24 @@ export default function Navbar() {
               </svg>
             </button>
 
+            {/* Cart link */}
+            <Link href="/cart" className="relative inline-flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-semantic-text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.2 6.4A1 1 0 007.8 21h8.4a1 1 0 00.98-.8L18 13M7 13H5.4" />
+              </svg>
+              {count > 0 && !showTransient && (
+                <motion.span animate={{ scale: 1 }} transition={{ duration: 0.45 }} className="absolute -top-2 -right-3 bg-semantic-text-primary text-red-500 rounded-full text-xs w-5 h-5 flex items-center justify-center">{count}</motion.span>
+              )}
+              <AnimatePresence>
+                {showTransient && (
+                  <motion.span initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: -12 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.25 }} className="absolute -top-7 -right-6 bg-semantic-text-primary text-white rounded-full text-xs px-2 py-1 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                      <polyline points="20 6 9 17 4 12" stroke="currentColor" strokeWidth={2} fill="none" />
+                    </svg>
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </Link>
             {/* Order button */}
             <Link
   href="/shop"
@@ -198,6 +238,9 @@ export default function Navbar() {
       {/* Screen reader live region */}
       <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {srMessage}
+      </span>
+      <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {cartSrMessage}
       </span>
     </nav>
   );
