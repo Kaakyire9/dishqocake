@@ -22,6 +22,12 @@ export default function Navbar() {
   const [cartSrMessage, setCartSrMessage] = useState("");
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement | null>(null);
+  // mobile dropdown links (include Order Now for easy access)
+  const mobileLinks = [
+    { label: 'Shop', href: '/shop' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' },
+  ];
 
   // Close menu on outside click or on Escape
   useEffect(() => {
@@ -100,10 +106,10 @@ export default function Navbar() {
       priority
     />
     {/* ✨ Gold sheen overlay */}
-    <span className="absolute inset-0 rounded-md overflow-hidden before:absolute before:inset-0
-                     before:bg-gradient-to-r before:from-transparent before:via-[#FFD580]/80 before:to-transparent
-                     before:translate-x-[-100%] group-hover:before:translate-x-[100%]
-                     before:transition-transform before:duration-[2.4s] before:ease-[cubic-bezier(0.45,0,0.55,1)]" />
+  <span className="absolute inset-0 rounded-md overflow-hidden before:absolute before:inset-0
+           before:bg-linear-to-r before:from-transparent before:via-[#FFD580]/80 before:to-transparent
+           before:-translate-x-full group-hover:before:translate-x-full
+           before:transition-transform before:duration-[2.4s] before:ease-[cubic-bezier(0.45,0,0.55,1)]" />
   </div>
 
   <span className="ml-2 text-lg font-bold tracking-tight text-[#1a1a1a] dark:text-white">
@@ -172,25 +178,41 @@ export default function Navbar() {
                 )}
               </AnimatePresence>
             </Link>
-            {/* Order button */}
-            <Link
-  href="/shop"
-  className="relative inline-flex items-center justify-center overflow-hidden rounded-md
-             px-4 py-2 font-semibold text-black dark:text-white
-             bg-gradient-to-br from-[#FFD580] to-[#F89C27]
-             dark:from-[#F89C27] dark:to-[#E87817]
-             shadow-md hover:shadow-lg hover:shadow-[#F89C27]/30
-             focus-visible:ring-2 focus-visible:ring-[#F89C27]
-             transition-all duration-300 group"
->
-  <span className="relative z-10">Order Now</span>
+              {/* Order CTA: icon-only on xs, full button on sm+ */}
+              <Link
+                href="/shop"
+                aria-label="Order now"
+                className="sm:hidden inline-flex items-center justify-center w-11 h-11 rounded-full
+                           bg-linear-to-br from-[#FFD580] to-[#F89C27] shadow-md hover:shadow-lg
+                           text-black dark:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F89C27]
+                           transition-transform active:scale-95"
+              >
+                {/* shopping bag icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 10-8 0v4" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 11h18l-1.5 9h-15L3 11z" />
+                </svg>
+              </Link>
 
-  {/* Gold shimmer overlay */}
-  <span className="absolute inset-0 before:absolute before:inset-0 
-                   before:bg-gradient-to-r before:from-transparent before:via-white/70 before:to-transparent
-                   before:translate-x-[-100%] group-hover:before:translate-x-[100%]
-                   before:transition-transform before:duration-[1.8s] before:ease-[cubic-bezier(0.45,0,0.55,1)]" />
-</Link>
+              {/* Full label on sm+ */}
+              <Link
+                href="/shop"
+                className="hidden sm:inline-flex relative items-center justify-center overflow-hidden rounded-md
+                           px-4 py-2 text-sm font-semibold text-black dark:text-white
+                           bg-linear-to-br from-[#FFD580] to-[#F89C27]
+                           dark:from-[#F89C27] dark:to-[#E87817]
+                           shadow-md hover:shadow-lg hover:shadow-[#F89C27]/30
+                           focus-visible:ring-2 focus-visible:ring-[#F89C27]
+                           transition-all duration-300 group whitespace-nowrap"
+              >
+                <span className="relative z-10">Order Now</span>
+
+                {/* Gold shimmer overlay */}
+                  <span className="absolute inset-0 before:absolute before:inset-0 
+                                 before:bg-linear-to-r before:from-transparent before:via-white/70 before:to-transparent
+                                 before:-translate-x-full group-hover:before:translate-x-full
+                                 before:transition-transform before:duration-[1.8s] before:ease-[cubic-bezier(0.45,0,0.55,1)]" />
+              </Link>
 
 
             {/* Mobile dropdown */}
@@ -206,28 +228,23 @@ export default function Navbar() {
                              bg-white/80 dark:bg-black/60 backdrop-blur-md 
                              border border-white/10 rounded-md shadow-xl p-2 z-50"
                 >
-                    {['Shop', 'About', 'Contact'].map((link) => {
-                      const href = `/${link.toLowerCase()}`;
-                      return (
-                        <a
-                          key={link}
-                          href={href}
-                          onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                            // allow modifier clicks (open in new tab) and non-left clicks
-                            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-                            e.preventDefault();
-                            setMenuOpen(false);
-                            // wait for close animation before navigating
-                            setTimeout(() => router.push(href), 200);
-                          }}
-                          className="block px-3 py-2 rounded text-sm text-[#1a1a1a] dark:text-white/90 
-                                     hover:bg-white/10 dark:hover:bg-white/5 transition-colors
-                                     focus-visible:ring-2 focus-visible:ring-[#F89C27]"
-                        >
-                          {link}
-                        </a>
-                      );
-                    })}
+                    {mobileLinks.map((item) => (
+                      <a
+                        key={item.href + item.label}
+                        href={item.href}
+                        onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                          e.preventDefault();
+                          setMenuOpen(false);
+                          setTimeout(() => router.push(item.href), 200);
+                        }}
+                        className="block px-3 py-2 rounded text-sm text-[#1a1a1a] dark:text-white/90 
+                                   hover:bg-white/10 dark:hover:bg-white/5 transition-colors
+                                   focus-visible:ring-2 focus-visible:ring-[#F89C27]"
+                      >
+                        {item.label}
+                      </a>
+                    ))}
                 </motion.div>
               )}
             </AnimatePresence>

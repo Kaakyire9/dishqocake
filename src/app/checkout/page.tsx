@@ -16,14 +16,18 @@ export default async function CheckoutPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-12">
-  <h1 className="text-2xl font-bold text-semantic-text-primary mb-6">Checkout</h1>
+  <h1 className="text-3xl sm:text-4xl font-extrabold bg-[linear-gradient(90deg,#F89C27,#D46F2E,#F89C27)] bg-clip-text text-transparent mb-6">Checkout</h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <CheckoutClient snapshot={snapshot} />
+          <div className="rounded-2xl backdrop-blur-xl bg-white/5 border border-white/10 p-6 shadow-sm">
+            <CheckoutClient snapshot={snapshot} />
+          </div>
         </div>
 
         <aside className="lg:col-span-1">
-          <CheckoutForm snapshot={snapshot} />
+          <div className="rounded-2xl p-6 backdrop-blur-xl bg-white/5 border border-white/10 shadow-sm">
+            <CheckoutForm snapshot={snapshot} />
+          </div>
         </aside>
       </div>
     </div>
