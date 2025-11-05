@@ -13,9 +13,9 @@ type GalleryItem = {
 
 export default function GallerySection() {
   const items: GalleryItem[] = [
-    { type: "image", src: "/gallery/gallery1.jpg", alt: "Berry Drip Cake" },
-  { type: "video", src: "/gallery/frosting.mp4", poster: "/gallery/gallery3.jpg", alt: "Frosting cake" },
-    { type: "image", src: "/gallery/gallery2.jpg", alt: "Wedding Cake" },
+    { type: "image", src: "/gallery/gallery7.jpg", alt: "Berry Drip Cake" },
+  { type: "video", src: "/gallery/frosting.mp4", poster: "/gallery/frosting.jpg", alt: "Frosting cake" },
+    { type: "image", src: "/gallery/gallery8.jpg", alt: "Wedding Cake" },
   { type: "video", src: "/gallery/chocolatepour.mp4", poster: "/gallery/gallery4.jpg", alt: "Pouring chocolate" },
     { type: "image", src: "/gallery/gallery3.jpg", alt: "Cupcake Tray" },
     { type: "image", src: "/gallery/gallery4.jpg", alt: "Celebration Cake" },
