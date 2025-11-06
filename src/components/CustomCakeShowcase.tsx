@@ -83,35 +83,38 @@ export default function CustomCakeShowcase() {
     description,
     duration,
     options,
+    shape = "round",
   }: {
     inches: number;
     description: string;
     duration: string;
     options: { layers: number; price: number; label?: string }[];
+    shape?: "round" | "square" | string;
   }) {
     const [selectedIdx, setSelectedIdx] = useState(0);
     const opt = options[selectedIdx];
+    const prettyShape = shape === "square" ? "Square" : "Round";
     const prod: Product = {
-      id: `round-${inches}-${opt.layers}`,
-      name: `${inches}" Whipped Cream Round (${opt.layers} layer${
+      id: `${shape}-${inches}-${opt.layers}`,
+      name: `${inches}" Whipped Cream ${prettyShape} (${opt.layers} layer${
         opt.layers > 1 ? "s" : ""
       })`,
       description,
       price: opt.price,
-  image:
-    inches === 5
-      ? "/products/dishqo-5wr.png"
-      : inches === 6
-      ? "/products/dishqo-6wr.png"
-      : inches === 7
-      ? "/products/dishqo-7wr.png"
-      : inches === 8
-      ? "/products/dishqo-8wr.png"
-      : inches === 9
-      ? "/products/dishqo-9wr.png"
-      : inches === 10
-      ? "/products/dishqo-10wr.png"
-      : "/images/cake-placeholder.svg",
+      image:
+        inches === 5
+          ? "/products/dishqo-5wr.png"
+          : inches === 6
+          ? "/products/dishqo-6wr.png"
+          : inches === 7
+          ? "/products/dishqo-7wr.png"
+          : inches === 8
+          ? "/products/dishqo-8wr.png"
+          : inches === 9
+          ? "/products/dishqo-9wr.png"
+          : inches === 10
+          ? "/products/dishqo-10wr.png"
+          : "/images/cake-placeholder.svg",
     };
 
     return (
@@ -233,6 +236,7 @@ export default function CustomCakeShowcase() {
                 description={s.description}
                 duration="2-3 days"
                 options={s.options}
+                shape="square"
               />
             ))}
           </div>
