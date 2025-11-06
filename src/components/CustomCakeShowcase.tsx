@@ -338,13 +338,22 @@ export default function CustomCakeShowcase() {
                   <motion.button
                     whileTap={{ scale: 0.9 }}
                     onClick={() => {
+                      const img =
+                        c.qty === 6
+                          ? "/products/dishqo-6cupcakes.png"
+                          : c.qty === 12
+                          ? "/products/dishqo-12cupcakes.png"
+                          : c.qty === 24
+                          ? "/products/dishqo-24cupcakes.jpg"
+                          : "/images/cake-placeholder.svg";
+
                       add(
                         {
                           id: `cup-${c.qty}`,
                           name: `${c.qty} Cupcakes`,
                           description: "Cupcake box",
                           price: c.price,
-                          image: "/images/cake-placeholder.svg",
+                          image: img,
                         },
                         1
                       );
