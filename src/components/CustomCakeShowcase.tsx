@@ -97,7 +97,7 @@ export default function CustomCakeShowcase() {
       })`,
       description,
       price: opt.price,
-      image: "",
+      image: inches === 5 ? "/images/dishqo-5wr.png" : "/images/cake-placeholder.jpg",
     };
 
     return (

@@ -1,5 +1,5 @@
 export const roundPrices = {
-  '5': [{ layers: 1, price: 250 }],
+  '5': [{ layers: 1, price: 300 }],
   '6': [{ layers: 2, price: 300 }, { layers: 3, price: 350 }, { layers: 4, price: 450 }],
   '7': [{ layers: 2, price: 400 }, { layers: 3, price: 500 }],
   '8': [{ layers: 2, price: 550 }, { layers: 3, price: 600 }, { layers: 4, price: 700 }],
