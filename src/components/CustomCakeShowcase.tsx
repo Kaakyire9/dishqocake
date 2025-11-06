@@ -94,6 +94,33 @@ export default function CustomCakeShowcase() {
     const [selectedIdx, setSelectedIdx] = useState(0);
     const opt = options[selectedIdx];
     const prettyShape = shape === "square" ? "Square" : "Round";
+    const imagePath = (() => {
+  // prefer square-specific images when shape === "square" (ws),
+  // otherwise use the whipped-cream round images (wr). Fall back to placeholder.
+  const ws = (n: number) => `/products/dishqo-${n}ws.png`;
+      const wr = (n: number) => `/products/dishqo-${n}wr.png`;
+      const pick = (n: number) => (shape === "square" ? ws(n) : wr(n));
+
+      switch (inches) {
+        case 5:
+          return pick(5);
+        case 6:
+          return pick(6);
+        case 7:
+          return pick(7);
+        case 8:
+          return pick(8);
+        case 9:
+          return pick(9);
+        case 10:
+          return pick(10);
+        case 12:
+          return pick(12);
+        default:
+          return "/images/cake-placeholder.svg";
+      }
+    })();
+
     const prod: Product = {
       id: `${shape}-${inches}-${opt.layers}`,
       name: `${inches}" Whipped Cream ${prettyShape} (${opt.layers} layer${
@@ -101,20 +128,7 @@ export default function CustomCakeShowcase() {
       })`,
       description,
       price: opt.price,
-      image:
-        inches === 5
-          ? "/products/dishqo-5wr.png"
-          : inches === 6
-          ? "/products/dishqo-6wr.png"
-          : inches === 7
-          ? "/products/dishqo-7wr.png"
-          : inches === 8
-          ? "/products/dishqo-8wr.png"
-          : inches === 9
-          ? "/products/dishqo-9wr.png"
-          : inches === 10
-          ? "/products/dishqo-10wr.png"
-          : "/images/cake-placeholder.svg",
+      image: imagePath,
     };
 
     return (
@@ -253,8 +267,13 @@ export default function CustomCakeShowcase() {
                 whileHover={{ scale: 1.03 }}
                 className="bg-white/70 border border-[#f4e9e3] rounded-2xl shadow-lg p-5"
               >
-                <div className="w-full h-28 bg-[#fff2f6] rounded-xl mb-3 flex items-center justify-center">
-                  <span className="text-[#b34b6b] font-semibold">Sheet Cake</span>
+                <div className="w-full h-28 rounded-xl mb-3 overflow-hidden relative">
+                  <Image
+                    src="/products/dishqo-sc.png"
+                    alt={`${s.label} sheet cake`}
+                    fill
+                    className="object-cover w-full h-full"
+                  />
                 </div>
                 <h4 className="font-semibold text-[#5c3c1f]">{s.label}</h4>
                 <p className="text-sm text-[#7a6a5a] mt-1">{s.description}</p>
@@ -269,7 +288,7 @@ export default function CustomCakeShowcase() {
                           name: s.label,
                           description: s.description,
                           price: s.price,
-                          image: "/images/cake-placeholder.svg",
+                          image: "/products/dishqo-sc.png",
                         },
                         1
                       );
@@ -296,8 +315,21 @@ export default function CustomCakeShowcase() {
                 whileHover={{ scale: 1.03 }}
                 className="bg-white/70 border border-[#f4e9e3] rounded-2xl shadow-lg p-5"
               >
-                <div className="w-full h-28 bg-[#fff2f6] rounded-xl mb-3 flex items-center justify-center">
-                  <span className="text-[#b34b6b] font-semibold">Cupcakes</span>
+                <div className="w-full h-28 rounded-xl mb-3 overflow-hidden relative">
+                  <Image
+                    src={
+                      c.qty === 6
+                        ? "/products/dishqo-6cupcakes.png"
+                        : c.qty === 12
+                        ? "/products/dishqo-12cupcakes.png"
+                        : c.qty === 24
+                        ? "/products/dishqo-24cupcakes.jpg"
+                        : "/images/cake-placeholder.svg"
+                    }
+                    alt={`${c.qty} cupcakes`}
+                    fill
+                    className="object-cover w-full h-full"
+                  />
                 </div>
                 <h4 className="font-semibold text-[#5c3c1f]">{c.qty} pieces</h4>
                 <p className="text-sm text-[#7a6a5a] mt-1">Freshly baked cupcakes</p>
