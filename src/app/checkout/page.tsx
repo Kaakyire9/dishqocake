@@ -4,6 +4,27 @@ import { cookies } from "next/headers";
 // import CopyButton from "@/components/CopyButton";
 import CheckoutForm from "@/components/CheckoutForm";
 
+export const metadata = {
+  title: "Checkout — DishQo Cake",
+  description: "Complete your order — enter your shipping details and payment information to place your DishQo Cake order.",
+  openGraph: {
+    title: "Checkout — DishQo Cake",
+    description: "Secure checkout for DishQo Cake. Review your cart, add delivery details, and complete your purchase.",
+    url: "https://www.dishqocake.com/checkout",
+    siteName: "DishQo Cake",
+    images: [
+      {
+        url: "https://www.dishqocake.com/dishqo-hero.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Checkout — DishQo Cake",
+      },
+    ],
+    locale: "en_GB",
+    type: "website",
+  },
+};
+
 export default async function CheckoutPage() {
   const cookieStore = await cookies();
   const raw = cookieStore.get("dishqo-cart")?.value ?? null;

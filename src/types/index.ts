@@ -4,6 +4,10 @@ export type Product = {
   description: string;
   price: number;
   image: string;
+  /** Absolute or relative path to a photographic OG image (preferable for social previews) */
+  ogImage?: string;
+  /** Optional optimized WebP OG image (1200x630) generated into /public/og/ */
+  ogWebp?: string;
 };
 
 export type SelectedOptions = {

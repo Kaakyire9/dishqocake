@@ -1,5 +1,28 @@
 import Link from "next/link";
 
+export const metadata = {
+  title: "DishQo Cake — A Flavored Way to Live",
+  description:
+    "Order handcrafted whipped cream cakes, elegant gold & black designs, and pink & cream desserts from DishQo Ghana. Custom cakes for birthdays, weddings, and events.",
+  openGraph: {
+    title: "DishQo Cake — A Flavored Way to Live",
+    description:
+      "Premium handcrafted cakes made in Ghana. Custom orders available — luxury, festive, and elegant designs for every celebration.",
+    url: "https://www.dishqocake.com",
+    siteName: "DishQo Cake",
+    images: [
+      {
+        url: "https://www.dishqocake.com/dishqo-hero.jpg",
+        width: 1200,
+        height: 630,
+        alt: "DishQo Cake — Order Received",
+      },
+    ],
+    locale: "en_GB",
+    type: "website",
+  },
+};
+
 export default function OrderSuccess() {
   return (
     <div className="min-h-screen flex items-center justify-center px-6">

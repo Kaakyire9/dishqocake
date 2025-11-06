@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.dishqocake.com
+
+# Sitemaps
+Sitemap: https://www.dishqocake.com/sitemap.xml
