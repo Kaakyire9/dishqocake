@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { formatGhs } from "@/lib/orders";
@@ -97,7 +98,20 @@ export default function CustomCakeShowcase() {
       })`,
       description,
       price: opt.price,
-      image: inches === 5 ? "/images/dishqo-5wr.png" : "/images/cake-placeholder.jpg",
+  image:
+    inches === 5
+      ? "/products/dishqo-5wr.png"
+      : inches === 6
+      ? "/products/dishqo-6wr.png"
+      : inches === 7
+      ? "/products/dishqo-7wr.png"
+      : inches === 8
+      ? "/products/dishqo-8wr.png"
+      : inches === 9
+      ? "/products/dishqo-9wr.png"
+      : inches === 10
+      ? "/products/dishqo-10wr.png"
+      : "/images/cake-placeholder.svg",
     };
 
     return (
@@ -106,10 +120,25 @@ export default function CustomCakeShowcase() {
         transition={{ duration: 0.25 }}
         className="bg-white/70 border border-[#f4e9e3] rounded-2xl shadow-lg backdrop-blur-md overflow-hidden hover:shadow-2xl"
       >
-        <div className="relative w-full h-44 flex items-center justify-center bg-gradient-to-br from-[#ffe9ef] via-[#fff5e8] to-[#fffdf8]">
-          <span className="text-4xl font-extrabold text-[#b34b6b] drop-shadow-sm">
-            {inches}&quot;
-          </span>
+        <div className="relative w-full h-44 overflow-hidden rounded-t-md">
+          {prod.image ? (
+            <>
+              <Image
+                src={prod.image}
+                alt={`${inches}\" ${prod.description}`}
+                fill
+                className="object-cover w-full h-full"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#ffe9ef]/60 via-[#fff5e8]/40 to-[#fffdf8]/40">
+                <span className="text-4xl font-extrabold text-[#b34b6b] drop-shadow-sm">{inches}&quot;</span>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-[#ffe9ef] via-[#fff5e8] to-[#fffdf8]">
+              <span className="text-4xl font-extrabold text-[#b34b6b] drop-shadow-sm">{inches}&quot;</span>
+            </div>
+          )}
         </div>
         <div className="p-5">
           <h3 className="font-semibold text-lg text-[#5c3c1f]">{prod.name}</h3>
@@ -120,26 +149,28 @@ export default function CustomCakeShowcase() {
             <span className="font-medium text-[#b34b6b]">{duration}</span>
           </div>
 
-          <div className="mt-3">
-            <label className="text-sm font-medium text-[#7a6a5a] block mb-2">
-              Layers
-            </label>
-            <div className="flex gap-2 flex-wrap">
-              {options.map((o, i) => (
-                <button
-                  key={o.layers}
-                  onClick={() => setSelectedIdx(i)}
-                  className={`px-3 py-1.5 rounded-md text-sm transition-all duration-200 border ${
-                    i === selectedIdx
-                      ? "bg-[#b34b6b] text-white border-[#b34b6b]"
-                      : "bg-white text-[#7a6a5a] border-[#e5d6cc] hover:bg-[#fff2f6]"
-                  }`}
-                >
-                  {o.layers}-layer ({formatGhs(o.price)})
-                </button>
-              ))}
+          {options.length > 1 ? (
+            <div className="mt-3">
+              <label className="text-sm font-medium text-[#7a6a5a] block mb-2">
+                Layers
+              </label>
+              <div className="flex gap-2 flex-wrap">
+                {options.map((o, i) => (
+                  <button
+                    key={o.layers}
+                    onClick={() => setSelectedIdx(i)}
+                    className={`px-3 py-1.5 rounded-md text-sm transition-all duration-200 border ${
+                      i === selectedIdx
+                        ? "bg-[#b34b6b] text-white border-[#b34b6b]"
+                        : "bg-white text-[#7a6a5a] border-[#e5d6cc] hover:bg-[#fff2f6]"
+                    }`}
+                  >
+                    {o.layers}-layer ({formatGhs(o.price)})
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
 
           <div className="mt-5 flex items-center justify-between">
             <span className="font-bold text-[#b34b6b] text-lg">
@@ -234,7 +265,7 @@ export default function CustomCakeShowcase() {
                           name: s.label,
                           description: s.description,
                           price: s.price,
-                          image: "/images/cake-placeholder.jpg",
+                          image: "/images/cake-placeholder.svg",
                         },
                         1
                       );
@@ -277,7 +308,7 @@ export default function CustomCakeShowcase() {
                           name: `${c.qty} Cupcakes`,
                           description: "Cupcake box",
                           price: c.price,
-                          image: "/images/cake-placeholder.jpg",
+                          image: "/images/cake-placeholder.svg",
                         },
                         1
                       );
