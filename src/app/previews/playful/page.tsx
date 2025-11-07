@@ -8,7 +8,7 @@ export default function PlayfulPreview() {
     <main className="min-h-screen bg-[#FFF8F3] flex items-center justify-center p-8">
       <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
   <div className="p-8 rounded-2xl bg-semantic-surface-card shadow-md">
-          <h1 className="text-4xl font-extrabold text-[#3F2A22]">Freshly Baked Happiness</h1>
+          <h1 className="text-4xl font-extrabold text-dishqo-heading">Freshly Baked Happiness</h1>
           <p className="mt-4 text-lg text-[#7A6A5E]">Delicious cakes and pastries made fresh daily. Order online or visit our bakery to taste the magic.</p>
 
           <div className="mt-8 flex gap-3">

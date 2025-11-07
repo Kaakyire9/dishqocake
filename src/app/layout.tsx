@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import ToastProvider from "@/components/ToastProvider";
 import Background from "@/components/Background";
 import MenuProvider from "@/context/MenuProvider";
+import WhatsAppFloating from "@/components/WhatsAppFloating";
 
 export const metadata = {
   title: "DishQo Cake — A Flavored Way to Live",
@@ -74,6 +75,7 @@ export default function RootLayout({
         <MenuProvider>
           <Navbar />
           <main className="flex-1">{children}</main>
+          <WhatsAppFloating />
           <Footer />
           <ToastProvider />
         </MenuProvider>

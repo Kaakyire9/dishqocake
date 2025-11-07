@@ -8,7 +8,7 @@ export default function MinimalPreview() {
     <main className="min-h-screen bg-[#FBFBFB] flex items-center justify-center p-8">
       <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
   <div className="p-8 rounded-2xl bg-semantic-surface-card shadow-md">
-          <h1 className="text-4xl font-extrabold text-[#222222]">Freshly Baked Happiness</h1>
+          <h1 className="text-4xl font-extrabold text-dishqo-heading">Freshly Baked Happiness</h1>
           <p className="mt-4 text-lg text-[#666666]">Delicious cakes and pastries made fresh daily. Order online or visit our bakery to taste the magic.</p>
 
           <div className="mt-8 flex gap-3">

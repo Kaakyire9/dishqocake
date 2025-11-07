@@ -58,7 +58,7 @@ function Card({
         <div className="bg-gradient-to-br from-pink-100 to-yellow-100 p-3 rounded-xl text-[#b34b6b] shadow-sm">
           {icon}
         </div>
-        <h3 className="text-xl font-semibold text-[#5c3c1f] tracking-wide">{title}</h3>
+        <h3 className="text-xl font-semibold text-dishqo-heading tracking-wide">{title}</h3>
       </div>
       <div className="space-y-4 text-[15px] text-[#6d5e52] leading-relaxed">{children}</div>
     </motion.div>
@@ -158,7 +158,7 @@ export default function CustomCakeShowcase() {
           )}
         </div>
         <div className="p-5">
-          <h3 className="font-semibold text-lg text-[#5c3c1f]">{prod.name}</h3>
+          <h3 className="font-semibold text-lg text-dishqo-heading">{prod.name}</h3>
           <p className="text-sm text-[#7a6a5a] mt-1">{prod.description}</p>
 
           <div className="mt-3 text-sm">
@@ -222,7 +222,7 @@ export default function CustomCakeShowcase() {
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
-      <h2 className="text-4xl sm:text-5xl font-extrabold text-center text-[#5c3c1f] mb-12 tracking-tight">
+      <h2 className="text-4xl sm:text-5xl font-extrabold text-center text-dishqo-heading mb-12 tracking-tight">
         Custom Cake Pricelist
       </h2>
 

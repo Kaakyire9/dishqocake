@@ -48,7 +48,7 @@ export default function AboutSection() {
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
           className="p-8 rounded-2xl backdrop-blur-xl bg-white/10 border border-white/20 shadow-[inset_0_0_20px_rgba(255,255,255,0.18)]"
         >
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-semantic-text-primary">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-dishqo-heading">
             DishQo — A Flavored Way to Live
           </h2>
           <div className="mt-2 w-20 h-[3px] bg-gradient-to-r from-[#F89C27] to-[#FFD580] rounded-full" />

@@ -96,7 +96,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl font-bold mb-4"
+            className="text-3xl font-bold mb-4 text-dishqo-heading"
           >
             The DishQo Promise
           </motion.h2>
@@ -156,11 +156,11 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section className="py-20 text-center bg-gradient-to-r from-[#fff4f7] via-[#fffaf5] to-[#fff4ee]">
-        <motion.h2
+          <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl font-bold mb-4"
+            className="text-3xl font-bold mb-4 text-dishqo-heading"
         >
           Celebrate With DishQo
         </motion.h2>

@@ -8,7 +8,7 @@ export default function ElegantPreview() {
     <main className="min-h-screen bg-[#FFF6EE] flex items-center justify-center p-8">
       <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
   <div className="p-8 rounded-2xl bg-semantic-surface-card shadow-lg">
-          <h1 className="text-4xl font-extrabold text-semantic-text-primary">Freshly Baked Happiness</h1>
+          <h1 className="text-4xl font-extrabold text-dishqo-heading">Freshly Baked Happiness</h1>
           {/* decorative soft-lavender bar */}
           <div className="mt-3 w-14 h-1 rounded bg-elegant-lavender" />
           <p className="mt-4 text-lg text-elegant-muted">Delicious cakes and pastries made fresh daily. Order online or visit our bakery to taste the magic.</p>

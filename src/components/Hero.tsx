@@ -38,7 +38,7 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="flex-1"
         >
-          <h1 className="text-4xl sm:text-5xl font-extrabold bg-[linear-gradient(90deg,#F89C27,#D46F2E,#F89C27)] bg-clip-text text-transparent">
+          <h1 className="text-4xl sm:text-5xl font-extrabold bg-[linear-gradient(90deg,#D46F2E,#B34B00,#D46F2E)] bg-clip-text text-transparent">
             Freshly Baked Happiness 🍰
           </h1>
 

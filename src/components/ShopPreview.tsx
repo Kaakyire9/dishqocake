@@ -49,7 +49,7 @@ export default function ShopPreview() {
 
           {/* Text content */}
           <div className="flex-1">
-            <h2 className="text-3xl font-extrabold text-semantic-text-primary">
+            <h2 className="text-3xl font-extrabold text-dishqo-heading">
               Discover Our Creations
             </h2>
             <p className="mt-4 text-lg text-semantic-text-muted leading-relaxed max-w-lg">

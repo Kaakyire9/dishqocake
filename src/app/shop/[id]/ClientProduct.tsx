@@ -21,7 +21,7 @@ export default function ClientProduct({ product, related }: Props) {
           <Image src={product.image} alt={product.name} width={800} height={600} className="object-cover w-full h-full" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-semantic-text-primary">{product.name}</h1>
+          <h1 className="text-3xl font-bold text-dishqo-heading">{product.name}</h1>
           <p className="text-xl text-semantic-accent-gold font-semibold mt-2">{formatGhs(product.price)}</p>
           <p className="mt-4 text-semantic-text-muted">{product.description}</p>
 

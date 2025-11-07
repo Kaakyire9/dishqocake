@@ -235,6 +235,11 @@ body {
   }
 }
 
+/* Semantic heading utility for DishQo brand */
+@layer utilities {
+  .text-dishqo-heading { color: var(--dishqo-heading) !important; }
+}
+
 /* ======================================================================
    TEMPORARY: Force light theme (hide dark mode)
    Remove this block to re-enable dark-mode via user/system preference.
@@ -245,6 +250,8 @@ body {
 :root {
   --background: #ffffff !important;
   --foreground: #171717 !important;
+  /* DishQo brand heading color */
+  --dishqo-heading: #4B3726;
 }
 
 html {

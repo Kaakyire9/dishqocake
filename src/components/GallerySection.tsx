@@ -99,7 +99,7 @@ export default function GallerySection() {
 
   return (
   <section id="gallery" className="max-w-6xl mx-auto px-6 py-16 relative">
-      <h2 className="text-3xl font-bold text-semantic-text-primary mb-8 text-center">DishQo Gallery</h2>
+  <h2 className="text-3xl font-bold text-dishqo-heading mb-8 text-center">DishQo Gallery</h2>
 
       {/* Masonry-like responsive grid */}
       <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 auto-rows-[200px]">
