@@ -1,4 +1,6 @@
 import Link from "next/link";
+import FindUs from "./FindUs";
+import NewsletterSignup from "./NewsletterSignup";
 
 export default function Footer() {
   return (
@@ -57,8 +59,18 @@ export default function Footer() {
           </nav>
         </div>
 
+        {/* Newsletter signup (placed above Find Us) */}
+        <div className="mt-6">
+          <NewsletterSignup />
+        </div>
+
+        {/* Find Us section placed near the footer */}
+        <div className="mt-6">
+          <FindUs />
+        </div>
+
         {/* Signature */}
-        <p className="text-[9px] text-white/40 italic tracking-wider text-right mt-2">
+        <p className="text-[9px] text-white/40 italic tracking-wider text-right mt-4">
           dishqo signature
         </p>
       </div>
