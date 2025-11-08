@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { AddToCartButton } from "./CartMicroInteractions";
 import { formatGhs } from "@/lib/orders";
 import { toast } from "@/lib/toast";
 import {
@@ -193,16 +194,15 @@ export default function CustomCakeShowcase() {
             <span className="font-bold text-[#b34b6b] text-lg">
               {formatGhs(prod.price)}
             </span>
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={() => {
+            <AddToCartButton
+              onAdd={() => {
                 add({ ...prod, options: { layers: opt.layers } }, 1);
                 toast.success(`${prod.name} added to cart`);
               }}
               className="px-4 py-2 rounded-md bg-[#b34b6b] hover:bg-[#a14362] text-white text-sm shadow-md transition-all"
             >
               Add to Cart
-            </motion.button>
+            </AddToCartButton>
           </div>
         </div>
       </motion.div>
@@ -272,6 +272,7 @@ export default function CustomCakeShowcase() {
                     src="/products/dishqo-sc.png"
                     alt={`${s.label} sheet cake`}
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover w-full h-full"
                   />
                 </div>
@@ -279,9 +280,8 @@ export default function CustomCakeShowcase() {
                 <p className="text-sm text-[#7a6a5a] mt-1">{s.description}</p>
                 <div className="mt-4 flex items-center justify-between">
                   <span className="font-bold text-[#b34b6b]">{formatGhs(s.price)}</span>
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => {
+                  <AddToCartButton
+                    onAdd={() => {
                       add(
                         {
                           id: `sheet-${s.label}`,
@@ -297,7 +297,7 @@ export default function CustomCakeShowcase() {
                     className="px-3 py-1.5 rounded-md bg-[#b34b6b] hover:bg-[#a14362] text-white text-sm"
                   >
                     Add
-                  </motion.button>
+                  </AddToCartButton>
                 </div>
               </motion.div>
             ))}
@@ -328,6 +328,7 @@ export default function CustomCakeShowcase() {
                     }
                     alt={`${c.qty} cupcakes`}
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover w-full h-full"
                   />
                 </div>
@@ -335,9 +336,8 @@ export default function CustomCakeShowcase() {
                 <p className="text-sm text-[#7a6a5a] mt-1">Freshly baked cupcakes</p>
                 <div className="mt-4 flex items-center justify-between">
                   <span className="font-bold text-[#b34b6b]">{formatGhs(c.price)}</span>
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => {
+                  <AddToCartButton
+                    onAdd={() => {
                       const img =
                         c.qty === 6
                           ? "/products/dishqo-6cupcakes.png"
@@ -346,7 +346,6 @@ export default function CustomCakeShowcase() {
                           : c.qty === 24
                           ? "/products/dishqo-24cupcakes.jpg"
                           : "/images/cake-placeholder.svg";
-
                       add(
                         {
                           id: `cup-${c.qty}`,
@@ -362,7 +361,7 @@ export default function CustomCakeShowcase() {
                     className="px-3 py-1.5 rounded-md bg-[#b34b6b] hover:bg-[#a14362] text-white text-sm"
                   >
                     Add
-                  </motion.button>
+                  </AddToCartButton>
                 </div>
               </motion.div>
             ))}

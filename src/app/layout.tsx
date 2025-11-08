@@ -5,6 +5,7 @@ import ToastProvider from "@/components/ToastProvider";
 import Background from "@/components/Background";
 import MenuProvider from "@/context/MenuProvider";
 import WhatsAppFloating from "@/components/WhatsAppFloating";
+import { products } from "@/lib/products";
 
 export const metadata = {
   title: "DishQo Cake — A Flavored Way to Live",
@@ -62,12 +63,45 @@ export default function RootLayout({
     },
   } as const;
 
+  // Build LocalBusiness + Product structured data
+  const localBusinessLd = {
+    "@type": "LocalBusiness",
+    name: "DishQo Cake",
+    url: SITE_ORIGIN,
+    telephone: "+233553437570",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Kumasi",
+      addressCountry: "GH",
+    },
+    logo: `${SITE_ORIGIN}/dishqo-logo.png`,
+  };
+
+  const productLdItems = products.slice(0, 5).map((p) => ({
+    "@type": "Product",
+    name: p.name,
+    description: p.description,
+    image: `${SITE_ORIGIN}${p.image}`,
+    offers: {
+      "@type": "Offer",
+      price: String(p.price),
+      priceCurrency: "GHS",
+      availability: "https://schema.org/InStock",
+      url: `${SITE_ORIGIN}/shop/${p.id}`,
+    },
+  }));
+
+  const graphLd = {
+    "@context": "https://schema.org",
+    "@graph": [bakeryLd, localBusinessLd, ...productLdItems],
+  } as const;
+
   return (
     <html lang="en">
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(bakeryLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(graphLd) }}
         />
       </head>
       <body className="font-sans bg-semantic-bg-surface text-semantic-text-primary min-h-screen flex flex-col">

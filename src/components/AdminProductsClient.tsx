@@ -71,7 +71,7 @@ export default function AdminProductsClient({ items: initialItems, addProduct, u
           <div key={p.id} className="flex items-center justify-between p-3 border-b">
             <div className="flex items-center gap-3">
               <div className="w-16 h-12 relative">
-                <Image src={p.image} alt={p.name} fill className="object-cover rounded" />
+                <Image src={p.image} alt={p.name} fill sizes="64px" className="object-cover rounded" />
               </div>
               <div>
                 <div className="font-semibold">{p.name}</div>

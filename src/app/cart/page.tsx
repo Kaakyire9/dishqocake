@@ -58,7 +58,13 @@ export default function CartPage() {
                 <motion.div key={it.id} initial={{ opacity: 0, y: 8 }} animate={animatingIds[it.id] ? { scale: [1, 1.03, 1] } : { opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35 }} className="flex items-center gap-4 p-4 rounded-2xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-sm mb-4">
                   <div className="w-28 h-20 relative rounded-md overflow-hidden">
                     {it.image ? (
-                      <Image src={it.image} alt={it.name} fill className="object-cover" />
+                      <Image
+                        src={it.image}
+                        alt={it.name}
+                        fill
+                        sizes="112px"
+                        className="object-cover"
+                      />
                     ) : (
                       <div className="w-full h-full">
                         <svg width="160" height="120" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-90">

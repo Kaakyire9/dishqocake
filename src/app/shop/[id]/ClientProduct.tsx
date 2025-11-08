@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useCartStore } from "@/store/cartStore";
 import { formatGhs } from "@/lib/orders";
 import { Product } from "@/types";
+import { AddToCartButton } from "@/components/CartMicroInteractions";
 import Link from "next/link";
 
 type Props = { product: Product; related: Product[] };
@@ -26,7 +27,14 @@ export default function ClientProduct({ product, related }: Props) {
           <p className="mt-4 text-semantic-text-muted">{product.description}</p>
 
           <div className="mt-6">
-            <button onClick={() => add(product, 1)} className="bg-semantic-btn-cta hover:bg-semantic-btn-cta-hover text-white px-5 py-3 rounded-md">Add to Cart</button>
+            <AddToCartButton
+              onAdd={() => {
+                add(product, 1);
+              }}
+              className="bg-semantic-btn-cta hover:bg-semantic-btn-cta-hover text-white px-5 py-3 rounded-md"
+            >
+              Add to Cart
+            </AddToCartButton>
           </div>
         </div>
       </motion.div>
