@@ -2,6 +2,7 @@ import Hero from "../components/Hero";
 import AboutSection from "../components/AboutSection";
 import ShopPreview from "../components/ShopPreview";
 import Testimonials from "../components/Testimonials";
+import GoogleReviews from "../components/GoogleReviews";
 import GallerySection from "../components/GallerySection";
 
 export const metadata = {
@@ -34,6 +35,7 @@ export default function Home() {
       <AboutSection />
       <ShopPreview />
       <Testimonials />
+  <GoogleReviews />
   <GallerySection />
     </main>
   );

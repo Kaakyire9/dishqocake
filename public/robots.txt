@@ -1,5 +1,10 @@
 # *
 User-agent: *
+# Prevent crawlers from indexing admin pages (these require auth and redirect to login)
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/admin
+
 Allow: /
 
 # Host
